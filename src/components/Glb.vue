@@ -59,7 +59,8 @@
     
     <!-- 控制提示 -->
     <div class="controls-hint">
-      <p>🖱️ 左键拖拽旋转 | 滚轮缩放 | 右键平移</p>
+      <p v-if="!isFollowingPlanet">🖱️ 左键拖拽旋转 | 滚轮缩放 | 右键平移</p>
+      <p v-else>🎯 跟随模式：滚轮缩放 | 拖拽退出跟随</p>
       <button v-if="isFollowingPlanet" @click="stopFollowing" class="stop-follow-btn">
         返回全景视图
       </button>
@@ -98,16 +99,20 @@ let animationId = null;
 let planetObjects = {}; // 存储行星对象
 let planetMeshes = []; // 存储重新排列的行星网格
 
-// 行星配置 - 按太阳系真实顺序，调整大小便于观察所有细节
+// 统一的视觉目标尺寸 - 所有行星聚焦后在视觉上看起来都是这么大
+const TARGET_VISUAL_SIZE = 30; // 可调整此参数来控制聚焦后所有行星的视觉大小
+
+// 行星配置 - 按太阳系真实顺序，包含原始尺寸信息
 const planets = [
   { 
     name: "Sun", 
     displayName: "太阳 ☀️", 
     icon: "☀️", 
     materialName: "material", 
-    scale: 0.004, // 太阳缩小
-    orbitRadius: 0, // 太阳在中心
-    orbitSpeed: 0,  // 不公转
+    scale: 0.004,
+    originalSize: 924000, // 原始模型尺寸
+    orbitRadius: 0,
+    orbitSpeed: 0,
     rotationSpeed: 0.001
   },
   { 
@@ -115,9 +120,10 @@ const planets = [
     displayName: "水星 ☿️", 
     icon: "☿️", 
     materialName: "Mercury", 
-    scale: 0.006, // 增大以便观察细节
-    orbitRadius: 15, // 轨道半径
-    orbitSpeed: 0.04, // 公转速度（距离太阳越近越快）
+    scale: 0.006,
+    originalSize: 3599,
+    orbitRadius: 15,
+    orbitSpeed: 0.04,
     rotationSpeed: 0.005
   },
   { 
@@ -126,6 +132,7 @@ const planets = [
     icon: "♀️", 
     materialName: "venus", 
     scale: 0.006,
+    originalSize: 7833,
     orbitRadius: 25,
     orbitSpeed: 0.025,
     rotationSpeed: 0.004
@@ -136,6 +143,7 @@ const planets = [
     icon: "🌍", 
     materialName: "Earth", 
     scale: 0.006,
+    originalSize: 8403,
     orbitRadius: 35,
     orbitSpeed: 0.02,
     rotationSpeed: 0.01
@@ -145,8 +153,9 @@ const planets = [
     displayName: "月球 🌙", 
     icon: "🌙", 
     materialName: "Moon", 
-    scale: 0.005, // 增大月球
-    orbitRadius: 40, // 月球轨道稍远于地球
+    scale: 0.005,
+    originalSize: 2104,
+    orbitRadius: 40,
     orbitSpeed: 0.018,
     rotationSpeed: 0.008
   },
@@ -156,6 +165,7 @@ const planets = [
     icon: "♂️", 
     materialName: "Mars", 
     scale: 0.006,
+    originalSize: 5395,
     orbitRadius: 50,
     orbitSpeed: 0.015,
     rotationSpeed: 0.009
@@ -165,7 +175,8 @@ const planets = [
     displayName: "木星 ♃", 
     icon: "♃", 
     materialName: "Jupiter", 
-    scale: 0.006, // 保持较大
+    scale: 0.006,
+    originalSize: 94051,
     orbitRadius: 70,
     orbitSpeed: 0.008,
     rotationSpeed: 0.015
@@ -175,7 +186,8 @@ const planets = [
     displayName: "土星 ♄", 
     icon: "♄", 
     materialName: "Saturn", 
-    scale: 0.006, // 保持较大
+    scale: 0.006,
+    originalSize: 190355,
     orbitRadius: 90,
     orbitSpeed: 0.005,
     rotationSpeed: 0.012
@@ -186,6 +198,7 @@ const planets = [
     icon: "♅", 
     materialName: "Uranus", 
     scale: 0.006,
+    originalSize: 51958,
     orbitRadius: 110,
     orbitSpeed: 0.003,
     rotationSpeed: 0.008
@@ -196,6 +209,7 @@ const planets = [
     icon: "♆", 
     materialName: "Neptune", 
     scale: 0.006,
+    originalSize: 32750,
     orbitRadius: 130,
     orbitSpeed: 0.002,
     rotationSpeed: 0.007
@@ -205,7 +219,8 @@ const planets = [
     displayName: "冥王星 ♇", 
     icon: "♇", 
     materialName: "Pluto", 
-    scale: 0.005, // 增大冥王星
+    scale: 0.005,
+    originalSize: 1050,
     orbitRadius: 150,
     orbitSpeed: 0.001,
     rotationSpeed: 0.003
@@ -267,11 +282,24 @@ function initScene() {
   controls.maxDistance = 1000;
   controls.screenSpacePanning = true;
   
-  // 当用户手动操作相机时，停止跟随行星
-  controls.addEventListener('start', () => {
-    if (isFollowingPlanet.value) {
+  // 监听鼠标事件，区分拖拽和缩放
+  // 只有拖拽（旋转/平移）时才停止跟随，缩放（滚轮）不影响跟随
+  let isDragging = false;
+  
+  renderer.domElement.addEventListener('mousedown', () => {
+    isDragging = true;
+  });
+  
+  renderer.domElement.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
+  
+  // 当用户拖拽时停止跟随
+  controls.addEventListener('change', () => {
+    if (isFollowingPlanet.value && isDragging) {
       isFollowingPlanet.value = false;
-      console.log('⚠️ 用户手动操作，停止跟随行星');
+      console.log('⚠️ 用户拖拽改变视角，停止跟随行星');
+      console.log('💡 提示：缩放操作（滚轮）不会影响跟随');
     }
   });
   
@@ -718,14 +746,19 @@ function focusOnPlanet(planet) {
   const currentPosition = mesh.position.clone();
   const planetConfig = planetData.config;
   
-  // 根据行星缩放比例计算统一的观察距离
-  // 让所有行星在视觉上看起来大小相近
-  const baseDistance = 15; // 基准距离
-  const scaleFactor = 0.006; // 基准缩放（最大行星的缩放）
-  const distance = baseDistance * (scaleFactor / planetConfig.scale);
+  // 计算行星的实际尺寸（原始尺寸 × 缩放比例）
+  const actualSize = planetConfig.originalSize * planetConfig.scale;
+  
+  // 根据实际尺寸计算观察距离，使所有行星在视觉上看起来大小统一
+  // 距离 = 实际尺寸 / 目标视觉尺寸 × 基准距离
+  const baseDistance = 50; // 基准距离系数
+  const distance = (actualSize / TARGET_VISUAL_SIZE) * baseDistance;
   
   console.log('  行星缩放:', planetConfig.scale);
-  console.log('  观察距离:', distance.toFixed(2));
+  console.log('  原始尺寸:', planetConfig.originalSize.toFixed(0));
+  console.log('  实际尺寸:', actualSize.toFixed(2));
+  console.log('  计算距离:', distance.toFixed(2));
+  console.log('  目标视觉尺寸:', TARGET_VISUAL_SIZE);
   
   // 目标相机位置（在行星斜上方）
   const direction = currentPosition.clone().normalize();
@@ -787,29 +820,28 @@ function animate() {
     const planetData = planetObjects[selectedPlanet.value];
     if (planetData && planetData.displayMesh) {
       const planetPosition = planetData.displayMesh.position.clone();
-      const planetConfig = planetData.config;
       
-      // 计算相机应该在的位置（保持相对位置）
-      const baseDistance = 15;
-      const scaleFactor = 0.006;
-      const distance = baseDistance * (scaleFactor / planetConfig.scale);
+      // 控制器目标始终指向行星
+      controls.target.copy(planetPosition);
       
+      // 计算相机当前距离行星的距离（保留用户的缩放）
+      const currentDistance = camera.position.distanceTo(planetPosition);
+      
+      // 计算相机应该在的方向（保持相对方向）
       const direction = planetPosition.clone().normalize();
       if (direction.length() === 0) {
         direction.set(1, 0, 1).normalize();
       }
       
+      // 根据当前距离计算新的相机位置
       const targetCameraPosition = new THREE.Vector3(
-        planetPosition.x + direction.x * distance * 0.7,
-        planetPosition.y + distance * 0.5,
-        planetPosition.z + direction.z * distance * 0.7
+        planetPosition.x + direction.x * currentDistance * 0.7,
+        planetPosition.y + currentDistance * 0.35,
+        planetPosition.z + direction.z * currentDistance * 0.7
       );
       
       // 平滑跟随（使用lerp插值）
       camera.position.lerp(targetCameraPosition, 0.05);
-      
-      // 控制器目标始终指向行星
-      controls.target.copy(planetPosition);
     }
   }
   
