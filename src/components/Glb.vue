@@ -60,6 +60,9 @@
     <!-- 控制提示 -->
     <div class="controls-hint">
       <p>🖱️ 左键拖拽旋转 | 滚轮缩放 | 右键平移</p>
+      <button v-if="isFollowingPlanet" @click="stopFollowing" class="stop-follow-btn">
+        返回全景视图
+      </button>
     </div>
   </div>
 </template>
@@ -77,6 +80,7 @@ const loadingProgress = ref(0);
 const panelCollapsed = ref(false);
 const selectedPlanet = ref(null);
 const displayedPlanets = ref([]);
+const isFollowingPlanet = ref(false); // 是否正在跟随行星
 
 // 模型信息
 const modelInfo = ref({
@@ -94,14 +98,14 @@ let animationId = null;
 let planetObjects = {}; // 存储行星对象
 let planetMeshes = []; // 存储重新排列的行星网格
 
-// 行星配置 - 按太阳系真实顺序，大小相近便于观察细节
+// 行星配置 - 按太阳系真实顺序，调整大小便于观察所有细节
 const planets = [
   { 
     name: "Sun", 
     displayName: "太阳 ☀️", 
     icon: "☀️", 
     materialName: "material", 
-    scale: 0.006,
+    scale: 0.004, // 太阳缩小
     orbitRadius: 0, // 太阳在中心
     orbitSpeed: 0,  // 不公转
     rotationSpeed: 0.001
@@ -111,7 +115,7 @@ const planets = [
     displayName: "水星 ☿️", 
     icon: "☿️", 
     materialName: "Mercury", 
-    scale: 0.005,
+    scale: 0.006, // 增大以便观察细节
     orbitRadius: 15, // 轨道半径
     orbitSpeed: 0.04, // 公转速度（距离太阳越近越快）
     rotationSpeed: 0.005
@@ -121,7 +125,7 @@ const planets = [
     displayName: "金星 ♀️", 
     icon: "♀️", 
     materialName: "venus", 
-    scale: 0.005,
+    scale: 0.006,
     orbitRadius: 25,
     orbitSpeed: 0.025,
     rotationSpeed: 0.004
@@ -131,7 +135,7 @@ const planets = [
     displayName: "地球 🌍", 
     icon: "🌍", 
     materialName: "Earth", 
-    scale: 0.005,
+    scale: 0.006,
     orbitRadius: 35,
     orbitSpeed: 0.02,
     rotationSpeed: 0.01
@@ -141,7 +145,7 @@ const planets = [
     displayName: "月球 🌙", 
     icon: "🌙", 
     materialName: "Moon", 
-    scale: 0.003,
+    scale: 0.005, // 增大月球
     orbitRadius: 40, // 月球轨道稍远于地球
     orbitSpeed: 0.018,
     rotationSpeed: 0.008
@@ -151,7 +155,7 @@ const planets = [
     displayName: "火星 ♂️", 
     icon: "♂️", 
     materialName: "Mars", 
-    scale: 0.005,
+    scale: 0.006,
     orbitRadius: 50,
     orbitSpeed: 0.015,
     rotationSpeed: 0.009
@@ -161,7 +165,7 @@ const planets = [
     displayName: "木星 ♃", 
     icon: "♃", 
     materialName: "Jupiter", 
-    scale: 0.006,
+    scale: 0.006, // 保持较大
     orbitRadius: 70,
     orbitSpeed: 0.008,
     rotationSpeed: 0.015
@@ -171,7 +175,7 @@ const planets = [
     displayName: "土星 ♄", 
     icon: "♄", 
     materialName: "Saturn", 
-    scale: 0.006,
+    scale: 0.006, // 保持较大
     orbitRadius: 90,
     orbitSpeed: 0.005,
     rotationSpeed: 0.012
@@ -181,7 +185,7 @@ const planets = [
     displayName: "天王星 ♅", 
     icon: "♅", 
     materialName: "Uranus", 
-    scale: 0.005,
+    scale: 0.006,
     orbitRadius: 110,
     orbitSpeed: 0.003,
     rotationSpeed: 0.008
@@ -191,7 +195,7 @@ const planets = [
     displayName: "海王星 ♆", 
     icon: "♆", 
     materialName: "Neptune", 
-    scale: 0.005,
+    scale: 0.006,
     orbitRadius: 130,
     orbitSpeed: 0.002,
     rotationSpeed: 0.007
@@ -201,7 +205,7 @@ const planets = [
     displayName: "冥王星 ♇", 
     icon: "♇", 
     materialName: "Pluto", 
-    scale: 0.004,
+    scale: 0.005, // 增大冥王星
     orbitRadius: 150,
     orbitSpeed: 0.001,
     rotationSpeed: 0.003
@@ -262,6 +266,14 @@ function initScene() {
   controls.minDistance = 1;
   controls.maxDistance = 1000;
   controls.screenSpacePanning = true;
+  
+  // 当用户手动操作相机时，停止跟随行星
+  controls.addEventListener('start', () => {
+    if (isFollowingPlanet.value) {
+      isFollowingPlanet.value = false;
+      console.log('⚠️ 用户手动操作，停止跟随行星');
+    }
+  });
   
   // 添加光源
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -656,8 +668,8 @@ function arrangePlanets() {
   // 调整相机位置以查看整个太阳系
   camera.position.set(0, 100, 150);
   controls.target.set(0, 0, 0);
-  controls.minDistance = 20;
-  controls.maxDistance = 500;
+  controls.minDistance = 0.1; // 可以拉得极近，观察纹理细节
+  controls.maxDistance = 1000; // 可以拉得非常远，俯瞰整个太阳系
   controls.update();
   
   console.log('\n✓ 太阳系布局完成');
@@ -666,9 +678,35 @@ function arrangePlanets() {
   console.log(`  太阳在中心 (0, 0, 0)`);
 }
 
+// 停止跟随并返回全景视图
+function stopFollowing() {
+  isFollowingPlanet.value = false;
+  selectedPlanet.value = null;
+  
+  console.log('🌌 返回全景视图');
+  
+  // 平滑移动到全景位置
+  gsap.to(camera.position, {
+    x: 0,
+    y: 100,
+    z: 150,
+    duration: 2,
+    ease: "power2.inOut"
+  });
+  
+  gsap.to(controls.target, {
+    x: 0,
+    y: 0,
+    z: 0,
+    duration: 2,
+    ease: "power2.inOut"
+  });
+}
+
 function focusOnPlanet(planet) {
   console.log('\n🎯 聚焦到:', planet.displayName);
   selectedPlanet.value = planet.name;
+  isFollowingPlanet.value = true; // 开始跟随行星
   
   const planetData = planetObjects[planet.name];
   if (!planetData || !planetData.displayMesh) {
@@ -678,19 +716,28 @@ function focusOnPlanet(planet) {
   
   const mesh = planetData.displayMesh;
   const currentPosition = mesh.position.clone();
+  const planetConfig = planetData.config;
   
-  // 计算合适的观察距离
-  const box = new THREE.Box3().setFromObject(mesh);
-  const size = box.getSize(new THREE.Vector3());
-  const maxDim = Math.max(size.x, size.y, size.z);
-  const distance = Math.max(maxDim * 4, 10);
+  // 根据行星缩放比例计算统一的观察距离
+  // 让所有行星在视觉上看起来大小相近
+  const baseDistance = 15; // 基准距离
+  const scaleFactor = 0.006; // 基准缩放（最大行星的缩放）
+  const distance = baseDistance * (scaleFactor / planetConfig.scale);
   
-  // 目标相机位置（在行星前上方）
+  console.log('  行星缩放:', planetConfig.scale);
+  console.log('  观察距离:', distance.toFixed(2));
+  
+  // 目标相机位置（在行星斜上方）
   const direction = currentPosition.clone().normalize();
+  if (direction.length() === 0) {
+    // 如果是太阳（在中心），使用默认方向
+    direction.set(1, 0, 1).normalize();
+  }
+  
   const targetPosition = new THREE.Vector3(
-    currentPosition.x + direction.x * distance,
+    currentPosition.x + direction.x * distance * 0.7,
     currentPosition.y + distance * 0.5,
-    currentPosition.z + direction.z * distance
+    currentPosition.z + direction.z * distance * 0.7
   );
   
   console.log('  目标位置:', currentPosition);
@@ -702,14 +749,12 @@ function focusOnPlanet(planet) {
     y: targetPosition.y,
     z: targetPosition.z,
     duration: 2,
-    ease: "power2.inOut",
-    onUpdate: () => {
-      // 动态更新目标位置（因为行星在移动）
-      const updatedPosition = planetData.displayMesh.position.clone();
-      controls.target.copy(updatedPosition);
-      controls.update();
-    }
+    ease: "power2.inOut"
   });
+  
+  // 设置控制器目标
+  controls.target.copy(currentPosition);
+  controls.update();
 }
 
 function animate() {
@@ -736,6 +781,37 @@ function animate() {
       planetData.position = mesh.position.clone();
     }
   });
+  
+  // 如果正在跟随某个行星，相机要跟随它移动
+  if (isFollowingPlanet.value && selectedPlanet.value) {
+    const planetData = planetObjects[selectedPlanet.value];
+    if (planetData && planetData.displayMesh) {
+      const planetPosition = planetData.displayMesh.position.clone();
+      const planetConfig = planetData.config;
+      
+      // 计算相机应该在的位置（保持相对位置）
+      const baseDistance = 15;
+      const scaleFactor = 0.006;
+      const distance = baseDistance * (scaleFactor / planetConfig.scale);
+      
+      const direction = planetPosition.clone().normalize();
+      if (direction.length() === 0) {
+        direction.set(1, 0, 1).normalize();
+      }
+      
+      const targetCameraPosition = new THREE.Vector3(
+        planetPosition.x + direction.x * distance * 0.7,
+        planetPosition.y + distance * 0.5,
+        planetPosition.z + direction.z * distance * 0.7
+      );
+      
+      // 平滑跟随（使用lerp插值）
+      camera.position.lerp(targetCameraPosition, 0.05);
+      
+      // 控制器目标始终指向行星
+      controls.target.copy(planetPosition);
+    }
+  }
   
   if (controls) controls.update();
   
@@ -978,6 +1054,27 @@ function onWindowResize() {
   color: rgba(255, 255, 255, 0.6);
   font-size: 14px;
   z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.stop-follow-btn {
+  background: #42b883;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.stop-follow-btn:hover {
+  background: #35a372;
+  transform: scale(1.05);
 }
 
 /* 响应式设计 */
