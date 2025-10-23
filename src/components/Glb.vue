@@ -1,0 +1,896 @@
+<template>
+  <div class="glb-viewer-wrapper">
+    <!-- 3D渲染容器 -->
+    <div ref="container" class="viewer-container"></div>
+    
+    <!-- 加载提示 -->
+    <div v-if="loading" class="loading-overlay">
+      <div class="loading-content">
+        <div class="spinner"></div>
+        <p>加载 GLB 模型中... {{ loadingProgress }}%</p>
+      </div>
+    </div>
+    
+    <!-- 模型信息面板 -->
+    <div class="info-panel" :class="{ collapsed: panelCollapsed }">
+      <div class="panel-header" @click="panelCollapsed = !panelCollapsed">
+        <h3>{{ panelCollapsed ? '📊' : '模型信息' }}</h3>
+        <span class="toggle-icon">{{ panelCollapsed ? '◀' : '▶' }}</span>
+      </div>
+      
+      <div v-if="!panelCollapsed" class="panel-content">
+        <div class="info-section">
+          <h4>行星列表</h4>
+          <div class="planet-list">
+            <div 
+              v-for="(planet, index) in displayedPlanets" 
+              :key="index"
+              class="planet-item"
+              :class="{ active: selectedPlanet === planet.name }"
+              @click="focusOnPlanet(planet)"
+            >
+              <div class="planet-icon">{{ planet.icon }}</div>
+              <div class="planet-info">
+                <div class="planet-name">{{ planet.displayName }}</div>
+                <div class="planet-status" v-if="planet.object">✓ 已加载</div>
+                <div class="planet-status missing" v-else>✗ 未找到</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h4>基本信息</h4>
+          <div class="info-item">
+            <span class="label">网格数量:</span>
+            <span class="value">{{ modelInfo.meshCount }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">材质数量:</span>
+            <span class="value">{{ modelInfo.materialCount }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">纹理数量:</span>
+            <span class="value">{{ modelInfo.textureCount }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 控制提示 -->
+    <div class="controls-hint">
+      <p>🖱️ 左键拖拽旋转 | 滚轮缩放 | 右键平移</p>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import gsap from "gsap";
+
+const container = ref(null);
+const loading = ref(true);
+const loadingProgress = ref(0);
+const panelCollapsed = ref(false);
+const selectedPlanet = ref(null);
+const displayedPlanets = ref([]);
+
+// 模型信息
+const modelInfo = ref({
+  meshCount: 0,
+  materialCount: 0,
+  textureCount: 0,
+  totalVertices: 0,
+  totalFaces: 0,
+  meshes: []
+});
+
+let scene, camera, renderer, controls;
+let loadedModel = null;
+let animationId = null;
+let planetObjects = {}; // 存储行星对象
+let planetMeshes = []; // 存储重新排列的行星网格
+
+// 行星配置 - 按太阳系顺序（缩放调整为更合适的观看比例）
+const planets = [
+  { name: "Sun", displayName: "太阳 ☀️", icon: "☀️", materialName: "material", scale: 0.01 },
+  { name: "Mercury", displayName: "水星 ☿️", icon: "☿️", materialName: "Mercury", scale: 0.004 },
+  { name: "Venus", displayName: "金星 ♀️", icon: "♀️", materialName: "venus", scale: 0.008 },
+  { name: "Earth", displayName: "地球 🌍", icon: "🌍", materialName: "Earth", scale: 0.009 },
+  { name: "Moon", displayName: "月球 🌙", icon: "🌙", materialName: "Moon", scale: 0.002 },
+  { name: "Mars", displayName: "火星 ♂️", icon: "♂️", materialName: "Mars", scale: 0.005 },
+  { name: "Jupiter", displayName: "木星 ♃", icon: "♃", materialName: "Jupiter", scale: 0.0008 },
+  { name: "Saturn", displayName: "土星 ♄", icon: "♄", materialName: "Saturn", scale: 0.0004 },
+  { name: "Uranus", displayName: "天王星 ♅", icon: "♅", materialName: "Uranus", scale: 0.0002 },
+  { name: "Neptune", displayName: "海王星 ♆", icon: "♆", materialName: "Neptune", scale: 0.00025 },
+  { name: "Pluto", displayName: "冥王星 ♇", icon: "♇", materialName: "Pluto", scale: 0.001 }
+];
+
+onMounted(() => {
+  initScene();
+  loadGLBModel();
+  animate();
+  
+  window.addEventListener("resize", onWindowResize);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", onWindowResize);
+  
+  if (animationId) {
+    cancelAnimationFrame(animationId);
+  }
+  
+  if (renderer) {
+    renderer.dispose();
+  }
+});
+
+function initScene() {
+  // 创建场景
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x1a1a2e);
+  
+  // 创建相机
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 5000);
+  camera.position.set(50, 50, 100);
+  
+  // 创建渲染器
+  renderer = new THREE.WebGLRenderer({ 
+    antialias: true,
+    alpha: false,
+    powerPreference: "high-performance"
+  });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.0;
+  
+  container.value.appendChild(renderer.domElement);
+  
+  // 添加轨道控制器
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;
+  controls.minDistance = 1;
+  controls.maxDistance = 1000;
+  controls.screenSpacePanning = true;
+  
+  // 添加光源
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  scene.add(ambientLight);
+  
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+  directionalLight.position.set(10, 10, 10);
+  directionalLight.castShadow = true;
+  directionalLight.shadow.mapSize.width = 2048;
+  directionalLight.shadow.mapSize.height = 2048;
+  scene.add(directionalLight);
+  
+  const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.6);
+  scene.add(hemisphereLight);
+  
+  // 添加辅助器
+  const axesHelper = new THREE.AxesHelper(100);
+  scene.add(axesHelper);
+  
+  const gridHelper = new THREE.GridHelper(200, 20, 0x444444, 0x222222);
+  scene.add(gridHelper);
+  
+  console.log('✓ 场景初始化完成');
+}
+
+function loadGLBModel() {
+  const loader = new GLTFLoader();
+  
+  console.log('\n========================================');
+  console.log('🔍 开始加载 GLB 模型');
+  console.log('========================================\n');
+  
+  loader.load(
+    '/models/high_resolution_solar_system.glb',
+    (gltf) => {
+      console.log('\n========================================');
+      console.log('✅ GLB 模型加载成功！');
+      console.log('========================================\n');
+      
+      loadedModel = gltf.scene;
+      
+      // 隐藏原始模型（我们会重新排列）
+      loadedModel.visible = false;
+      
+      // ===== 打印 GLTF 根信息 =====
+      console.log('📦 GLTF 根对象信息:');
+      console.log('  - GLTF 对象:', gltf);
+      console.log('  - Scene:', gltf.scene);
+      console.log('  - Scenes 数量:', gltf.scenes?.length || 0);
+      console.log('  - Animations 数量:', gltf.animations?.length || 0);
+      console.log('  - Cameras 数量:', gltf.cameras?.length || 0);
+      console.log('  - Asset 信息:', gltf.asset);
+      
+      if (gltf.animations && gltf.animations.length > 0) {
+        console.log('\n🎬 动画信息:');
+        gltf.animations.forEach((anim, i) => {
+          console.log(`  [${i}] ${anim.name || '未命名动画'}`);
+          console.log(`      持续时间: ${anim.duration}s`);
+          console.log(`      轨道数: ${anim.tracks.length}`);
+        });
+      }
+      
+      // ===== 分析场景结构 =====
+      console.log('\n========================================');
+      console.log('🌳 场景层级结构:');
+      console.log('========================================\n');
+      
+      let meshCount = 0;
+      let materialSet = new Set();
+      let textureSet = new Set();
+      let totalVertices = 0;
+      let totalFaces = 0;
+      let meshesData = [];
+      
+      function printHierarchy(obj, level = 0) {
+        const indent = '  '.repeat(level);
+        const icon = obj.isMesh ? '🔷' : obj.isGroup ? '📁' : obj.isLight ? '💡' : obj.isCamera ? '📷' : '⚪';
+        
+        console.log(`${indent}${icon} ${obj.type}: "${obj.name || '未命名'}"`);
+        
+        if (obj.isMesh) {
+          const geometry = obj.geometry;
+          const material = obj.material;
+          
+          // 几何体信息
+          const vertices = geometry.attributes.position?.count || 0;
+          const faces = geometry.index ? geometry.index.count / 3 : vertices / 3;
+          
+          console.log(`${indent}  └─ 顶点数: ${vertices}, 面数: ${Math.floor(faces)}`);
+          
+          // 材质信息
+          if (material) {
+            if (Array.isArray(material)) {
+              console.log(`${indent}  └─ 材质: 多材质 (${material.length}个)`);
+              material.forEach(mat => materialSet.add(mat.uuid));
+            } else {
+              console.log(`${indent}  └─ 材质: ${material.type} "${material.name || '未命名'}"`);
+              materialSet.add(material.uuid);
+              
+              // 打印材质详细信息
+              printMaterialInfo(material, level + 2);
+            }
+          }
+          
+          // 位置信息
+          const worldPos = new THREE.Vector3();
+          obj.getWorldPosition(worldPos);
+          console.log(`${indent}  └─ 世界坐标: (${worldPos.x.toFixed(2)}, ${worldPos.y.toFixed(2)}, ${worldPos.z.toFixed(2)})`);
+          
+          // 包围盒
+          const box = new THREE.Box3().setFromObject(obj);
+          const size = box.getSize(new THREE.Vector3());
+          console.log(`${indent}  └─ 尺寸: ${size.x.toFixed(2)} × ${size.y.toFixed(2)} × ${size.z.toFixed(2)}`);
+          
+          meshCount++;
+          totalVertices += vertices;
+          totalFaces += faces;
+          
+          // 保存网格数据
+          meshesData.push({
+            name: obj.name,
+            object: obj,
+            vertices: vertices,
+            faces: Math.floor(faces),
+            position: worldPos,
+            size: size
+          });
+        }
+        
+        // 递归处理子对象
+        if (obj.children && obj.children.length > 0) {
+          console.log(`${indent}  └─ 子对象数: ${obj.children.length}`);
+          obj.children.forEach(child => printHierarchy(child, level + 1));
+        }
+      }
+      
+      function printMaterialInfo(material, level = 0) {
+        const indent = '  '.repeat(level);
+        
+        console.log(`${indent}🎨 材质属性:`);
+        console.log(`${indent}  - 类型: ${material.type}`);
+        console.log(`${indent}  - 名称: ${material.name || '未命名'}`);
+        console.log(`${indent}  - 颜色: ${material.color ? `#${material.color.getHexString()}` : 'N/A'}`);
+        console.log(`${indent}  - 透明: ${material.transparent}`);
+        console.log(`${indent}  - 不透明度: ${material.opacity}`);
+        console.log(`${indent}  - 金属度: ${material.metalness ?? 'N/A'}`);
+        console.log(`${indent}  - 粗糙度: ${material.roughness ?? 'N/A'}`);
+        console.log(`${indent}  - 双面: ${material.side === THREE.DoubleSide ? '是' : '否'}`);
+        
+        // 纹理信息
+        const textureProps = ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 
+                             'emissiveMap', 'aoMap', 'alphaMap', 'bumpMap', 
+                             'displacementMap', 'envMap'];
+        
+        let hasTextures = false;
+        textureProps.forEach(prop => {
+          if (material[prop]) {
+            if (!hasTextures) {
+              console.log(`${indent}  🖼️ 纹理贴图:`);
+              hasTextures = true;
+            }
+            
+            const texture = material[prop];
+            console.log(`${indent}    - ${prop}:`);
+            console.log(`${indent}        UUID: ${texture.uuid}`);
+            console.log(`${indent}        尺寸: ${texture.image?.width || '?'} × ${texture.image?.height || '?'}`);
+            console.log(`${indent}        格式: ${texture.format}`);
+            console.log(`${indent}        类型: ${texture.type}`);
+            console.log(`${indent}        Source: ${texture.source?.data?.src || 'embedded'}`);
+            
+            textureSet.add(texture.uuid);
+          }
+        });
+      }
+      
+      printHierarchy(gltf.scene);
+      
+      // ===== 统计信息 =====
+      console.log('\n========================================');
+      console.log('📊 模型统计信息:');
+      console.log('========================================');
+      console.log(`  🔷 网格总数: ${meshCount}`);
+      console.log(`  🎨 材质总数: ${materialSet.size}`);
+      console.log(`  🖼️ 纹理总数: ${textureSet.size}`);
+      console.log(`  📐 总顶点数: ${totalVertices.toLocaleString()}`);
+      console.log(`  🔺 总面数: ${Math.floor(totalFaces).toLocaleString()}`);
+      console.log('========================================\n');
+      
+      // 更新UI信息
+      modelInfo.value = {
+        meshCount: meshCount,
+        materialCount: materialSet.size,
+        textureCount: textureSet.size,
+        totalVertices: totalVertices,
+        totalFaces: Math.floor(totalFaces),
+        meshes: meshesData
+      };
+      
+      // ===== 识别和匹配行星 =====
+      console.log('\n========================================');
+      console.log('🌍 识别和匹配行星:');
+      console.log('========================================\n');
+      
+      gltf.scene.traverse((child) => {
+        if (child.isMesh || child.isSkinnedMesh) {
+          const material = child.material;
+          if (material) {
+            const materialName = material.name;
+            
+            // 根据材质名称匹配行星
+            const planet = planets.find(p => p.materialName === materialName);
+            if (planet) {
+              console.log(`✓ 找到 ${planet.displayName} (材质: ${materialName})`);
+              planetObjects[planet.name] = {
+                mesh: child,
+                config: planet
+              };
+            }
+          }
+        }
+      });
+      
+      console.log('\n匹配结果:', Object.keys(planetObjects));
+      
+      // ===== 重新排列行星 =====
+      arrangePlanets();
+      
+      // 更新显示的行星列表
+      displayedPlanets.value = planets.map(p => ({
+        ...p,
+        object: planetObjects[p.name]?.displayMesh || null
+      }));
+      
+      // ===== 打印所有材质详细信息 =====
+      console.log('========================================');
+      console.log('🎨 所有材质详细信息:');
+      console.log('========================================\n');
+      
+      const materials = [];
+      gltf.scene.traverse((obj) => {
+        if (obj.isMesh && obj.material) {
+          if (Array.isArray(obj.material)) {
+            materials.push(...obj.material);
+          } else {
+            materials.push(obj.material);
+          }
+        }
+      });
+      
+      // 去重
+      const uniqueMaterials = [...new Map(materials.map(m => [m.uuid, m])).values()];
+      
+      uniqueMaterials.forEach((mat, index) => {
+        console.log(`\n📦 材质 [${index + 1}/${uniqueMaterials.length}]:`);
+        printMaterialInfo(mat, 1);
+      });
+      
+      // ===== 打印所有纹理详细信息 =====
+      console.log('\n========================================');
+      console.log('🖼️ 所有纹理详细信息:');
+      console.log('========================================\n');
+      
+      const textures = [];
+      uniqueMaterials.forEach(mat => {
+        const textureProps = ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 
+                             'emissiveMap', 'aoMap', 'alphaMap', 'bumpMap', 
+                             'displacementMap', 'envMap'];
+        textureProps.forEach(prop => {
+          if (mat[prop]) textures.push({ type: prop, texture: mat[prop], material: mat.name });
+        });
+      });
+      
+      // 去重
+      const uniqueTextures = [...new Map(textures.map(t => [t.texture.uuid, t])).values()];
+      
+      uniqueTextures.forEach((item, index) => {
+        const tex = item.texture;
+        console.log(`\n🖼️ 纹理 [${index + 1}/${uniqueTextures.length}]:`);
+        console.log(`  - 类型: ${item.type}`);
+        console.log(`  - 所属材质: ${item.material || '未命名'}`);
+        console.log(`  - UUID: ${tex.uuid}`);
+        console.log(`  - 尺寸: ${tex.image?.width || '?'} × ${tex.image?.height || '?'}`);
+        console.log(`  - 格式: ${tex.format}`);
+        console.log(`  - 数据类型: ${tex.type}`);
+        console.log(`  - 编码: ${tex.encoding}`);
+        console.log(`  - 过滤模式: minFilter=${tex.minFilter}, magFilter=${tex.magFilter}`);
+        console.log(`  - 包裹模式: wrapS=${tex.wrapS}, wrapT=${tex.wrapT}`);
+        console.log(`  - 各向异性: ${tex.anisotropy}`);
+        console.log(`  - Source: ${tex.source?.data?.src || 'embedded data'}`);
+      });
+      
+      // 添加原始模型到场景（已隐藏）
+      scene.add(gltf.scene);
+      
+      loading.value = false;
+      
+      console.log('\n========================================');
+      console.log('✅ 所有模型信息已打印完成！');
+      console.log('========================================\n');
+    },
+    (progress) => {
+      const percent = (progress.loaded / progress.total) * 100;
+      loadingProgress.value = Math.round(percent);
+      console.log(`⏳ 加载进度: ${loadingProgress.value}%`);
+    },
+    (error) => {
+      console.error('\n❌ GLB 模型加载失败:', error);
+      loading.value = false;
+      alert('加载 GLB 模型失败，请检查文件路径和格式');
+    }
+  );
+}
+
+// 重新排列行星
+function arrangePlanets() {
+  console.log('\n========================================');
+  console.log('🎨 重新排列行星展示:');
+  console.log('========================================\n');
+  
+  const spacing = 20; // 行星之间的间距
+  let currentX = -spacing * planets.length / 2; // 从左边开始
+  
+  planets.forEach((planetConfig, index) => {
+    const planetData = planetObjects[planetConfig.name];
+    if (!planetData) {
+      console.warn(`⚠️ 未找到 ${planetConfig.displayName}`);
+      return;
+    }
+    
+    const originalMesh = planetData.mesh;
+    
+    // 创建新的网格（不克隆骨骼动画，只克隆几何体和材质）
+    let newMesh;
+    const geometry = originalMesh.geometry;
+    const material = originalMesh.material;
+    
+    if (originalMesh.isSkinnedMesh) {
+      // 对于 SkinnedMesh，需要特殊处理
+      // 克隆几何体并计算顶点法线
+      const clonedGeometry = geometry.clone();
+      clonedGeometry.computeVertexNormals();
+      
+      newMesh = new THREE.Mesh(clonedGeometry, material.clone());
+      
+      console.log(`     原始类型: SkinnedMesh`);
+      console.log(`     几何体顶点数:`, clonedGeometry.attributes.position.count);
+    } else {
+      // 普通 Mesh
+      const clonedGeometry = geometry.clone();
+      clonedGeometry.computeVertexNormals();
+      
+      newMesh = new THREE.Mesh(clonedGeometry, material.clone());
+      
+      console.log(`     原始类型: Mesh`);
+      console.log(`     几何体顶点数:`, clonedGeometry.attributes.position.count);
+    }
+    
+    // 设置位置和缩放
+    newMesh.scale.set(planetConfig.scale, planetConfig.scale, planetConfig.scale);
+    newMesh.position.set(currentX, 0, 0);
+    newMesh.rotation.set(0, 0, 0);
+    
+    // 确保材质可见
+    newMesh.visible = true;
+    newMesh.castShadow = true;
+    newMesh.receiveShadow = true;
+    
+    // 添加到场景
+    scene.add(newMesh);
+    planetMeshes.push(newMesh);
+    
+    // 保存显示用的网格引用
+    planetObjects[planetConfig.name].displayMesh = newMesh;
+    planetObjects[planetConfig.name].position = new THREE.Vector3(currentX, 0, 0);
+    
+    // 计算包围盒
+    const box = new THREE.Box3().setFromObject(newMesh);
+    const size = box.getSize(new THREE.Vector3());
+    
+    console.log(`  ${planetConfig.icon} ${planetConfig.displayName}:`);
+    console.log(`     位置: (${currentX.toFixed(1)}, 0, 0)`);
+    console.log(`     缩放比例: ${planetConfig.scale}`);
+    console.log(`     实际尺寸: ${size.x.toFixed(2)} × ${size.y.toFixed(2)} × ${size.z.toFixed(2)}`);
+    console.log(`     材质:`, newMesh.material.name);
+    console.log(`     可见:`, newMesh.visible);
+    
+    // 添加一个小球作为标记（用于调试）
+    const markerGeometry = new THREE.SphereGeometry(0.5, 16, 16);
+    const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
+    const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+    marker.position.copy(newMesh.position);
+    scene.add(marker);
+    
+    currentX += spacing;
+  });
+  
+  // 调整相机位置以查看所有行星
+  const totalWidth = Math.abs(currentX);
+  
+  camera.position.set(0, 15, 40);
+  controls.target.set(0, 0, 0);
+  controls.minDistance = 5;
+  controls.maxDistance = 200;
+  controls.update();
+  
+  console.log('\n✓ 行星排列完成');
+  console.log(`  总宽度: ${totalWidth.toFixed(1)}`);
+  console.log(`  相机位置: (0, 15, 40)`);
+  console.log(`  相机目标: (0, 0, 0)`);
+  console.log(`  已添加 ${planetMeshes.length} 个行星到场景`);
+}
+
+function focusOnPlanet(planet) {
+  console.log('\n🎯 聚焦到:', planet.displayName);
+  selectedPlanet.value = planet.name;
+  
+  const planetData = planetObjects[planet.name];
+  if (!planetData || !planetData.displayMesh) {
+    console.error('❌ 未找到行星对象');
+    return;
+  }
+  
+  const mesh = planetData.displayMesh;
+  const position = planetData.position;
+  
+  // 计算合适的观察距离
+  const box = new THREE.Box3().setFromObject(mesh);
+  const size = box.getSize(new THREE.Vector3());
+  const maxDim = Math.max(size.x, size.y, size.z);
+  const distance = Math.max(maxDim * 3, 5);
+  
+  // 目标相机位置
+  const targetPosition = new THREE.Vector3(
+    position.x,
+    position.y + distance * 0.3,
+    position.z + distance
+  );
+  
+  console.log('  目标位置:', position);
+  console.log('  相机位置:', targetPosition);
+  
+  // 平滑移动相机
+  gsap.to(camera.position, {
+    x: targetPosition.x,
+    y: targetPosition.y,
+    z: targetPosition.z,
+    duration: 1.5,
+    ease: "power2.inOut",
+    onUpdate: () => {
+      controls.target.copy(position);
+      controls.update();
+    }
+  });
+  
+  // 同时动画控制器目标
+  gsap.to(controls.target, {
+    x: position.x,
+    y: position.y,
+    z: position.z,
+    duration: 1.5,
+    ease: "power2.inOut"
+  });
+}
+
+function animate() {
+  animationId = requestAnimationFrame(animate);
+  
+  // 让所有行星自转
+  planetMeshes.forEach((mesh, index) => {
+    mesh.rotation.y += 0.005;
+  });
+  
+  if (controls) controls.update();
+  
+  if (renderer && scene && camera) {
+    renderer.render(scene, camera);
+  }
+}
+
+function onWindowResize() {
+  if (!camera || !renderer) return;
+  
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+</script>
+
+<style scoped>
+.glb-viewer-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.viewer-container {
+  width: 100%;
+  height: 100%;
+  background-color: #1a1a2e;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* 加载动画 */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(26, 26, 46, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.loading-content {
+  text-align: center;
+  color: white;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top: 4px solid #42b883;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 信息面板 */
+.info-panel {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 350px;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid rgba(66, 184, 131, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+  z-index: 100;
+  max-height: 80vh;
+  overflow: hidden;
+}
+
+.info-panel.collapsed {
+  width: 60px;
+}
+
+.panel-header {
+  padding: 15px 20px;
+  background: rgba(66, 184, 131, 0.2);
+  border-bottom: 1px solid rgba(66, 184, 131, 0.3);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.info-panel.collapsed .panel-header {
+  padding: 15px 10px;
+  justify-content: center;
+}
+
+.panel-header h3 {
+  margin: 0;
+  color: #42b883;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.toggle-icon {
+  color: #42b883;
+  font-size: 14px;
+}
+
+.info-panel.collapsed .toggle-icon {
+  display: none;
+}
+
+.panel-content {
+  max-height: calc(80vh - 60px);
+  overflow-y: auto;
+  padding: 15px;
+}
+
+.panel-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.panel-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.panel-content::-webkit-scrollbar-thumb {
+  background: rgba(66, 184, 131, 0.5);
+  border-radius: 3px;
+}
+
+.info-section {
+  margin-bottom: 20px;
+}
+
+.info-section h4 {
+  color: #42b883;
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  border-bottom: 1px solid rgba(66, 184, 131, 0.3);
+  padding-bottom: 5px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.info-item .label {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+}
+
+.info-item .value {
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.planet-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.planet-item {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.planet-item:hover {
+  background: rgba(66, 184, 131, 0.2);
+  border-color: rgba(66, 184, 131, 0.5);
+  transform: translateX(-5px);
+}
+
+.planet-item.active {
+  background: rgba(66, 184, 131, 0.3);
+  border-color: #42b883;
+}
+
+.planet-icon {
+  font-size: 28px;
+  margin-right: 12px;
+  min-width: 35px;
+  text-align: center;
+}
+
+.planet-info {
+  flex: 1;
+}
+
+.planet-name {
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.planet-status {
+  font-size: 12px;
+  color: #42b883;
+}
+
+.planet-status.missing {
+  color: #ff6b6b;
+}
+
+/* 控制提示 */
+.controls-hint {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  z-index: 50;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .info-panel {
+    width: 300px;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .controls-hint {
+    font-size: 12px;
+    padding: 8px 15px;
+    bottom: 10px;
+  }
+}
+</style>
+

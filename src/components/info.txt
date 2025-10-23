@@ -1,0 +1,1165 @@
+📦 GLTF 根对象信息:
+Glb.vue:196   - GLTF 对象: {scene: Group, scenes: Array(1), animations: Array(1), cameras: Array(0), asset: {…}, …}
+Glb.vue:197   - Scene: Group {isObject3D: true, uuid: 'cd7b2a06-590f-4ea5-b3f8-87b9687b4aa8', name: 'Sketchfab_Scene', type: 'Group', parent: null, …}
+Glb.vue:198   - Scenes 数量: 1
+Glb.vue:199   - Animations 数量: 1
+Glb.vue:200   - Cameras 数量: 0
+Glb.vue:201   - Asset 信息: {generator: 'fab-model-conversion', version: '2.0'}
+Glb.vue:204 
+🎬 动画信息:
+Glb.vue:206   [0] ArmatureArmatureAction
+Glb.vue:207       持续时间: 33.33333206176758s
+Glb.vue:208       轨道数: 13
+Glb.vue:213 
+========================================
+Glb.vue:214 🌳 场景层级结构:
+Glb.vue:215 ========================================
+
+Glb.vue:228 📁 Group: "Sketchfab_Scene"
+Glb.vue:281   └─ 子对象数: 1
+Glb.vue:228   ⚪ Object3D: "Sketchfab_model"
+Glb.vue:281     └─ 子对象数: 15
+Glb.vue:228     ⚪ Object3D: "fcaa437d56b842d8a00c66191a3270f7fbx"
+Glb.vue:281       └─ 子对象数: 1
+Glb.vue:228       ⚪ Object3D: "Object_2"
+Glb.vue:281         └─ 子对象数: 1
+Glb.vue:228         ⚪ Object3D: "RootNode"
+Glb.vue:281           └─ 子对象数: 13
+Glb.vue:228           ⚪ Object3D: "Armature"
+Glb.vue:281             └─ 子对象数: 1
+Glb.vue:228             ⚪ Object3D: "Object_5"
+Glb.vue:281               └─ 子对象数: 13
+Glb.vue:228               ⚪ Object3D: "Mestre_00"
+Glb.vue:281                 └─ 子对象数: 12
+Glb.vue:228                 ⚪ Bone: "Venus_01"
+Glb.vue:281                   └─ 子对象数: 1
+Glb.vue:228                   ⚪ Object3D: "Venus_end_013"
+Glb.vue:228                 ⚪ Bone: "Earth_02"
+Glb.vue:281                   └─ 子对象数: 1
+Glb.vue:228                   ⚪ Object3D: "Earth_end_021"
+Glb.vue:228                 ⚪ Bone: "Moon_03"
+Glb.vue:281                   └─ 子对象数: 1
+Glb.vue:228                   ⚪ Object3D: "Moon_end_019"
+Glb.vue:228                 ⚪ Bone: "Mars_04"
+Glb.vue:281                   └─ 子对象数: 1
+Glb.vue:228                   ⚪ Object3D: "Mars_end_022"
+Glb.vue:228                 ⚪ Bone: "Jupiter_05"
+Glb.vue:281                   └─ 子对象数: 1
+Glb.vue:228                   ⚪ Object3D: "Jupiter_end_015"
+Glb.vue:228                 ⚪ Bone: "Saturn_06"
+Glb.vue:281                   └─ 子对象数: 1
+Glb.vue:228                   ⚪ Object3D: "Saturn_end_014"
+Glb.vue:228                 ⚪ Bone: "Neptune_07"
+Glb.vue:281                   └─ 子对象数: 1
+Glb.vue:228                   ⚪ Object3D: "Neptune_end_017"
+Glb.vue:228                 ⚪ Bone: "uranus_08"
+Glb.vue:281                   └─ 子对象数: 1
+Glb.vue:228                   ⚪ Object3D: "uranus_end_020"
+Glb.vue:228                 ⚪ Bone: "PLuto_09"
+Glb.vue:281                   └─ 子对象数: 1
+Glb.vue:228                   ⚪ Object3D: "PLuto_end_023"
+Glb.vue:228                 ⚪ Bone: "EarthAtmo_010"
+Glb.vue:281                   └─ 子对象数: 1
+Glb.vue:228                   ⚪ Object3D: "EarthAtmo_end_016"
+Glb.vue:228                 ⚪ Bone: "Mercury_011"
+Glb.vue:281                   └─ 子对象数: 1
+Glb.vue:228                   ⚪ Object3D: "Mercury_end_024"
+Glb.vue:228                 ⚪ Bone: "Sun_012"
+Glb.vue:281                   └─ 子对象数: 1
+Glb.vue:228                   ⚪ Object3D: "Sun_end_018"
+Glb.vue:228               ⚪ Object3D: "Object_31"
+Glb.vue:228               ⚪ Object3D: "Object_33"
+Glb.vue:228               ⚪ Object3D: "Object_35"
+Glb.vue:228               ⚪ Object3D: "Object_37"
+Glb.vue:228               ⚪ Object3D: "Object_39"
+Glb.vue:228               ⚪ Object3D: "Object_41"
+Glb.vue:228               ⚪ Object3D: "Object_44"
+Glb.vue:228               ⚪ Object3D: "Object_46"
+Glb.vue:228               ⚪ Object3D: "Object_49"
+Glb.vue:228               ⚪ Object3D: "Object_51"
+Glb.vue:228               ⚪ Object3D: "Object_53"
+Glb.vue:228               ⚪ Object3D: "Object_55"
+Glb.vue:228           ⚪ Object3D: "PlutoLow"
+Glb.vue:228           ⚪ Object3D: "UranusLow"
+Glb.vue:228           ⚪ Object3D: "NeptuneLow"
+Glb.vue:228           ⚪ Object3D: "EarthClouds"
+Glb.vue:228           ⚪ Object3D: "VenusLow"
+Glb.vue:228           ⚪ Object3D: "JupiterLow"
+Glb.vue:228           ⚪ Object3D: "SaturnLow"
+Glb.vue:228           ⚪ Object3D: "SunLow"
+Glb.vue:228           ⚪ Object3D: "MarsLow"
+Glb.vue:228           ⚪ Object3D: "MercuryLow"
+Glb.vue:228           ⚪ Object3D: "MoonLow"
+Glb.vue:228           ⚪ Object3D: "EarthLow"
+Glb.vue:228     🔷 SkinnedMesh: "Object_32"
+Glb.vue:238       └─ 顶点数: 682, 面数: 1280
+Glb.vue:246       └─ 材质: MeshStandardMaterial "Pluto"
+Glb.vue:289         🎨 材质属性:
+Glb.vue:290           - 类型: MeshStandardMaterial
+Glb.vue:291           - 名称: Pluto
+Glb.vue:292           - 颜色: #ffffff
+Glb.vue:293           - 透明: false
+Glb.vue:294           - 不透明度: 1
+Glb.vue:295           - 金属度: 0
+Glb.vue:296           - 粗糙度: 0.8239417257
+Glb.vue:297           - 双面: 是
+Glb.vue:308           🖼️ 纹理贴图:
+Glb.vue:313             - map:
+Glb.vue:314                 UUID: 49ce0bda-f65b-45c4-a7f5-d0ca69f51abb
+Glb.vue:315                 尺寸: 2048 × 1024
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:313             - normalMap:
+Glb.vue:314                 UUID: 4ee05b8e-8011-4763-9139-aa4518a3faaa
+Glb.vue:315                 尺寸: 2048 × 1024
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:257       └─ 世界坐标: (0.00, 0.00, 0.00)
+Glb.vue:262       └─ 尺寸: 1049.67 × 1050.30 × 1051.41
+Glb.vue:228     🔷 SkinnedMesh: "Object_34"
+Glb.vue:238       └─ 顶点数: 918, 面数: 1398
+Glb.vue:246       └─ 材质: MeshStandardMaterial "Uranus"
+Glb.vue:289         🎨 材质属性:
+Glb.vue:290           - 类型: MeshStandardMaterial
+Glb.vue:291           - 名称: Uranus
+Glb.vue:292           - 颜色: #ffffff
+Glb.vue:293           - 透明: true
+Glb.vue:294           - 不透明度: 1
+Glb.vue:295           - 金属度: 0
+Glb.vue:296           - 粗糙度: 0.8614710366
+Glb.vue:297           - 双面: 是
+Glb.vue:308           🖼️ 纹理贴图:
+Glb.vue:313             - map:
+Glb.vue:314                 UUID: 836ef8d6-6cfa-4eca-9fb1-47ac0b2e0863
+Glb.vue:315                 尺寸: 2048 × 1024
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:313             - normalMap:
+Glb.vue:314                 UUID: 0a440b18-3353-4625-a7db-058ec4d18149
+Glb.vue:315                 尺寸: 2048 × 1024
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:257       └─ 世界坐标: (0.00, 0.00, 0.00)
+Glb.vue:262       └─ 尺寸: 51957.92 × 33609.62 × 51957.91
+Glb.vue:228     🔷 SkinnedMesh: "Object_36"
+Glb.vue:238       └─ 顶点数: 682, 面数: 1280
+Glb.vue:246       └─ 材质: MeshStandardMaterial "Neptune"
+Glb.vue:289         🎨 材质属性:
+Glb.vue:290           - 类型: MeshStandardMaterial
+Glb.vue:291           - 名称: Neptune
+Glb.vue:292           - 颜色: #ffffff
+Glb.vue:293           - 透明: false
+Glb.vue:294           - 不透明度: 1
+Glb.vue:295           - 金属度: 0
+Glb.vue:296           - 粗糙度: 0.5078125
+Glb.vue:297           - 双面: 是
+Glb.vue:308           🖼️ 纹理贴图:
+Glb.vue:313             - map:
+Glb.vue:314                 UUID: 23bc4a19-590a-4feb-90f6-95fa30f4dd09
+Glb.vue:315                 尺寸: 2048 × 1024
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:257       └─ 世界坐标: (0.00, 0.00, 0.00)
+Glb.vue:262       └─ 尺寸: 32749.80 × 32769.38 × 32803.90
+Glb.vue:228     🔷 SkinnedMesh: "Object_38"
+Glb.vue:238       └─ 顶点数: 666, 面数: 1280
+Glb.vue:246       └─ 材质: MeshStandardMaterial "Nuvem"
+Glb.vue:289         🎨 材质属性:
+Glb.vue:290           - 类型: MeshStandardMaterial
+Glb.vue:291           - 名称: Nuvem
+Glb.vue:292           - 颜色: #ffffff
+Glb.vue:293           - 透明: true
+Glb.vue:294           - 不透明度: 1
+Glb.vue:295           - 金属度: 0
+Glb.vue:296           - 粗糙度: 1
+Glb.vue:297           - 双面: 是
+Glb.vue:308           🖼️ 纹理贴图:
+Glb.vue:313             - map:
+Glb.vue:314                 UUID: b044c3b7-b24f-419a-8f30-7845de29f430
+Glb.vue:315                 尺寸: 2048 × 1024
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:257       └─ 世界坐标: (0.00, 0.00, 0.00)
+Glb.vue:262       └─ 尺寸: 8965.83 × 8983.54 × 8965.83
+Glb.vue:228     🔷 SkinnedMesh: "Object_40"
+Glb.vue:238       └─ 顶点数: 682, 面数: 1280
+Glb.vue:246       └─ 材质: MeshStandardMaterial "venus"
+Glb.vue:289         🎨 材质属性:
+Glb.vue:290           - 类型: MeshStandardMaterial
+Glb.vue:291           - 名称: venus
+Glb.vue:292           - 颜色: #ffffff
+Glb.vue:293           - 透明: false
+Glb.vue:294           - 不透明度: 1
+Glb.vue:295           - 金属度: 0
+Glb.vue:296           - 粗糙度: 0.751714939
+Glb.vue:297           - 双面: 是
+Glb.vue:308           🖼️ 纹理贴图:
+Glb.vue:313             - map:
+Glb.vue:314                 UUID: c3671347-6343-4d9e-83b8-bbbb4524ea07
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:313             - normalMap:
+Glb.vue:314                 UUID: 7cf8e4d4-9317-4b28-b41c-71c6bd4c63b1
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:257       └─ 世界坐标: (0.00, 0.00, 0.00)
+Glb.vue:262       └─ 尺寸: 7828.19 × 7832.87 × 7841.12
+Glb.vue:228     🔷 SkinnedMesh: "Object_42"
+Glb.vue:238       └─ 顶点数: 682, 面数: 1280
+Glb.vue:246       └─ 材质: MeshStandardMaterial "Jupiter"
+Glb.vue:289         🎨 材质属性:
+Glb.vue:290           - 类型: MeshStandardMaterial
+Glb.vue:291           - 名称: Jupiter
+Glb.vue:292           - 颜色: #ffffff
+Glb.vue:293           - 透明: false
+Glb.vue:294           - 不透明度: 1
+Glb.vue:295           - 金属度: 0
+Glb.vue:296           - 粗糙度: 0.8239417257
+Glb.vue:297           - 双面: 是
+Glb.vue:308           🖼️ 纹理贴图:
+Glb.vue:313             - map:
+Glb.vue:314                 UUID: 1761ce10-df08-4c8a-861e-76b9c5421d50
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:313             - normalMap:
+Glb.vue:314                 UUID: d0672dff-8d80-4e3d-aa6b-ce172d38223d
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:257       └─ 世界坐标: (0.00, 0.00, 0.00)
+Glb.vue:262       └─ 尺寸: 94050.71 × 88529.63 × 94206.08
+Glb.vue:228     🔷 SkinnedMesh: "Object_43"
+Glb.vue:238       └─ 顶点数: 682, 面数: 1280
+Glb.vue:246       └─ 材质: MeshStandardMaterial "JupiterAtmosphere"
+Glb.vue:289         🎨 材质属性:
+Glb.vue:290           - 类型: MeshStandardMaterial
+Glb.vue:291           - 名称: JupiterAtmosphere
+Glb.vue:292           - 颜色: #ffffff
+Glb.vue:293           - 透明: true
+Glb.vue:294           - 不透明度: 1
+Glb.vue:295           - 金属度: 0
+Glb.vue:296           - 粗糙度: 0.5809832317
+Glb.vue:297           - 双面: 是
+Glb.vue:308           🖼️ 纹理贴图:
+Glb.vue:313             - map:
+Glb.vue:314                 UUID: d14b7665-c7df-4dd4-93eb-0b781e34f6a3
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:313             - normalMap:
+Glb.vue:314                 UUID: d0672dff-8d80-4e3d-aa6b-ce172d38223d
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:257       └─ 世界坐标: (0.00, 0.00, 0.00)
+Glb.vue:262       └─ 尺寸: 95030.69 × 89452.08 × 95187.68
+Glb.vue:228     🔷 SkinnedMesh: "Object_45"
+Glb.vue:238       └─ 顶点数: 918, 面数: 1398
+Glb.vue:246       └─ 材质: MeshStandardMaterial "Saturn"
+Glb.vue:289         🎨 材质属性:
+Glb.vue:290           - 类型: MeshStandardMaterial
+Glb.vue:291           - 名称: Saturn
+Glb.vue:292           - 颜色: #ffffff
+Glb.vue:293           - 透明: true
+Glb.vue:294           - 不透明度: 1
+Glb.vue:295           - 金属度: 0
+Glb.vue:296           - 粗糙度: 1
+Glb.vue:297           - 双面: 是
+Glb.vue:308           🖼️ 纹理贴图:
+Glb.vue:313             - map:
+Glb.vue:314                 UUID: b8fd2c61-cc3a-4eac-b413-ca37132e1791
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:257       └─ 世界坐标: (0.00, 0.00, 0.00)
+Glb.vue:262       └─ 尺寸: 190354.95 × 79946.16 × 190354.93
+Glb.vue:228     🔷 SkinnedMesh: "Object_47"
+Glb.vue:238       └─ 顶点数: 682, 面数: 1280
+Glb.vue:246       └─ 材质: MeshStandardMaterial "material"
+Glb.vue:289         🎨 材质属性:
+Glb.vue:290           - 类型: MeshStandardMaterial
+Glb.vue:291           - 名称: material
+Glb.vue:292           - 颜色: #ffffff
+Glb.vue:293           - 透明: false
+Glb.vue:294           - 不透明度: 1
+Glb.vue:295           - 金属度: 0
+Glb.vue:296           - 粗糙度: 1
+Glb.vue:297           - 双面: 是
+Glb.vue:308           🖼️ 纹理贴图:
+Glb.vue:313             - map:
+Glb.vue:314                 UUID: 45ffc133-c18e-4a31-9fb1-72d2a04e12b3
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:313             - emissiveMap:
+Glb.vue:314                 UUID: 45ffc133-c18e-4a31-9fb1-72d2a04e12b3
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:257       └─ 世界坐标: (0.00, 0.00, 0.00)
+Glb.vue:262       └─ 尺寸: 923712.38 × 924264.62 × 925238.28
+Glb.vue:228     🔷 SkinnedMesh: "Object_48"
+Glb.vue:238       └─ 顶点数: 308, 面数: 256
+Glb.vue:246       └─ 材质: MeshStandardMaterial "SunCorona"
+Glb.vue:289         🎨 材质属性:
+Glb.vue:290           - 类型: MeshStandardMaterial
+Glb.vue:291           - 名称: SunCorona
+Glb.vue:292           - 颜色: #ffffff
+Glb.vue:293           - 透明: true
+Glb.vue:294           - 不透明度: 1
+Glb.vue:295           - 金属度: 0
+Glb.vue:296           - 粗糙度: 0.9577051495
+Glb.vue:297           - 双面: 是
+Glb.vue:308           🖼️ 纹理贴图:
+Glb.vue:313             - map:
+Glb.vue:314                 UUID: 965e0f82-c194-4561-8ab6-6dc607cec6a3
+Glb.vue:315                 尺寸: 2048 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:313             - emissiveMap:
+Glb.vue:314                 UUID: b0601fca-807b-4cbb-8d6a-b856c7dbe00e
+Glb.vue:315                 尺寸: 2048 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:257       └─ 世界坐标: (0.00, 0.00, 0.00)
+Glb.vue:262       └─ 尺寸: 1073227.76 × 1066099.96 × 1064638.79
+Glb.vue:228     🔷 SkinnedMesh: "Object_50"
+Glb.vue:238       └─ 顶点数: 682, 面数: 1280
+Glb.vue:246       └─ 材质: MeshStandardMaterial "Mars"
+Glb.vue:289         🎨 材质属性:
+Glb.vue:290           - 类型: MeshStandardMaterial
+Glb.vue:291           - 名称: Mars
+Glb.vue:292           - 颜色: #ffffff
+Glb.vue:293           - 透明: false
+Glb.vue:294           - 不透明度: 1
+Glb.vue:295           - 金属度: 0
+Glb.vue:296           - 粗糙度: 0.8187881098
+Glb.vue:297           - 双面: 是
+Glb.vue:308           🖼️ 纹理贴图:
+Glb.vue:313             - map:
+Glb.vue:314                 UUID: ce879d4d-9b2a-4d96-a69b-dc084962a6bb
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:313             - normalMap:
+Glb.vue:314                 UUID: 15a8686d-afc8-4933-8db6-7e5850b23e43
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:257       └─ 世界坐标: (0.00, 0.00, 0.00)
+Glb.vue:262       └─ 尺寸: 5395.20 × 5395.24 × 5395.20
+Glb.vue:228     🔷 SkinnedMesh: "Object_52"
+Glb.vue:238       └─ 顶点数: 682, 面数: 1280
+Glb.vue:246       └─ 材质: MeshStandardMaterial "Mercury"
+Glb.vue:289         🎨 材质属性:
+Glb.vue:290           - 类型: MeshStandardMaterial
+Glb.vue:291           - 名称: Mercury
+Glb.vue:292           - 颜色: #ffffff
+Glb.vue:293           - 透明: false
+Glb.vue:294           - 不透明度: 1
+Glb.vue:295           - 金属度: 0
+Glb.vue:296           - 粗糙度: 0.9577051495
+Glb.vue:297           - 双面: 是
+Glb.vue:308           🖼️ 纹理贴图:
+Glb.vue:313             - map:
+Glb.vue:314                 UUID: f6632a8f-3203-425a-a181-95251efcc370
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:313             - normalMap:
+Glb.vue:314                 UUID: 928596b3-089c-4454-a2e8-17965d08c7ed
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:313             - emissiveMap:
+Glb.vue:314                 UUID: a8bbb1e1-6968-487f-8bef-385b1f4aec2b
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:257       └─ 世界坐标: (0.00, 0.00, 0.00)
+Glb.vue:262       └─ 尺寸: 3598.87 × 3598.90 × 3598.87
+Glb.vue:228     🔷 SkinnedMesh: "Object_54"
+Glb.vue:238       └─ 顶点数: 682, 面数: 1280
+Glb.vue:246       └─ 材质: MeshStandardMaterial "Moon"
+Glb.vue:289         🎨 材质属性:
+Glb.vue:290           - 类型: MeshStandardMaterial
+Glb.vue:291           - 名称: Moon
+Glb.vue:292           - 颜色: #ffffff
+Glb.vue:293           - 透明: false
+Glb.vue:294           - 不透明度: 1
+Glb.vue:295           - 金属度: 0
+Glb.vue:296           - 粗糙度: 0.9577051495
+Glb.vue:297           - 双面: 是
+Glb.vue:308           🖼️ 纹理贴图:
+Glb.vue:313             - map:
+Glb.vue:314                 UUID: 12d743d8-dea6-4659-9994-43ccb4eec5cf
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:313             - normalMap:
+Glb.vue:314                 UUID: e9627612-213c-4cc2-b429-6a6afee95b57
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:257       └─ 世界坐标: (0.00, 0.00, 0.00)
+Glb.vue:262       └─ 尺寸: 2103.30 × 2104.97 × 2102.56
+Glb.vue:228     🔷 SkinnedMesh: "Object_56"
+Glb.vue:238       └─ 顶点数: 682, 面数: 1280
+Glb.vue:246       └─ 材质: MeshStandardMaterial "Earth"
+Glb.vue:289         🎨 材质属性:
+Glb.vue:290           - 类型: MeshStandardMaterial
+Glb.vue:291           - 名称: Earth
+Glb.vue:292           - 颜色: #ffffff
+Glb.vue:293           - 透明: false
+Glb.vue:294           - 不透明度: 1
+Glb.vue:295           - 金属度: 0
+Glb.vue:296           - 粗糙度: 1
+Glb.vue:297           - 双面: 是
+Glb.vue:308           🖼️ 纹理贴图:
+Glb.vue:313             - map:
+Glb.vue:314                 UUID: fc317450-6763-4392-940b-ec4823121cc8
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:313             - normalMap:
+Glb.vue:314                 UUID: d66ef02a-210b-4de3-b4a0-8993458c5952
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:313             - roughnessMap:
+Glb.vue:314                 UUID: 153f0b1f-fa6a-41b8-a288-69d6a96fb4bb
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:313             - metalnessMap:
+Glb.vue:314                 UUID: 153f0b1f-fa6a-41b8-a288-69d6a96fb4bb
+Glb.vue:315                 尺寸: 4096 × 2048
+Glb.vue:316                 格式: 1023
+Glb.vue:317                 类型: 1009
+Glb.vue:318                 Source: embedded
+Glb.vue:257       └─ 世界坐标: (0.00, 0.00, 0.00)
+Glb.vue:262       └─ 尺寸: 8397.39 × 8402.41 × 8411.26
+Glb.vue:328 
+========================================
+Glb.vue:329 📊 模型统计信息:
+Glb.vue:330 ========================================
+Glb.vue:331   🔷 网格总数: 14
+Glb.vue:332   🎨 材质总数: 14
+Glb.vue:333   🖼️ 纹理总数: 25
+Glb.vue:334   📐 总顶点数: 9,630
+Glb.vue:335   🔺 总面数: 17,132
+Glb.vue:336 ========================================
+
+Glb.vue:349 ========================================
+Glb.vue:350 🎨 所有材质详细信息:
+Glb.vue:351 ========================================
+
+Glb.vue:368 
+📦 材质 [1/14]:
+Glb.vue:289   🎨 材质属性:
+Glb.vue:290     - 类型: MeshStandardMaterial
+Glb.vue:291     - 名称: Pluto
+Glb.vue:292     - 颜色: #ffffff
+Glb.vue:293     - 透明: false
+Glb.vue:294     - 不透明度: 1
+Glb.vue:295     - 金属度: 0
+Glb.vue:296     - 粗糙度: 0.8239417257
+Glb.vue:297     - 双面: 是
+Glb.vue:308     🖼️ 纹理贴图:
+Glb.vue:313       - map:
+Glb.vue:314           UUID: 49ce0bda-f65b-45c4-a7f5-d0ca69f51abb
+Glb.vue:315           尺寸: 2048 × 1024
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:313       - normalMap:
+Glb.vue:314           UUID: 4ee05b8e-8011-4763-9139-aa4518a3faaa
+Glb.vue:315           尺寸: 2048 × 1024
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:368 
+📦 材质 [2/14]:
+Glb.vue:289   🎨 材质属性:
+Glb.vue:290     - 类型: MeshStandardMaterial
+Glb.vue:291     - 名称: Uranus
+Glb.vue:292     - 颜色: #ffffff
+Glb.vue:293     - 透明: true
+Glb.vue:294     - 不透明度: 1
+Glb.vue:295     - 金属度: 0
+Glb.vue:296     - 粗糙度: 0.8614710366
+Glb.vue:297     - 双面: 是
+Glb.vue:308     🖼️ 纹理贴图:
+Glb.vue:313       - map:
+Glb.vue:314           UUID: 836ef8d6-6cfa-4eca-9fb1-47ac0b2e0863
+Glb.vue:315           尺寸: 2048 × 1024
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:313       - normalMap:
+Glb.vue:314           UUID: 0a440b18-3353-4625-a7db-058ec4d18149
+Glb.vue:315           尺寸: 2048 × 1024
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:368 
+📦 材质 [3/14]:
+Glb.vue:289   🎨 材质属性:
+Glb.vue:290     - 类型: MeshStandardMaterial
+Glb.vue:291     - 名称: Neptune
+Glb.vue:292     - 颜色: #ffffff
+Glb.vue:293     - 透明: false
+Glb.vue:294     - 不透明度: 1
+Glb.vue:295     - 金属度: 0
+Glb.vue:296     - 粗糙度: 0.5078125
+Glb.vue:297     - 双面: 是
+Glb.vue:308     🖼️ 纹理贴图:
+Glb.vue:313       - map:
+Glb.vue:314           UUID: 23bc4a19-590a-4feb-90f6-95fa30f4dd09
+Glb.vue:315           尺寸: 2048 × 1024
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:368 
+📦 材质 [4/14]:
+Glb.vue:289   🎨 材质属性:
+Glb.vue:290     - 类型: MeshStandardMaterial
+Glb.vue:291     - 名称: Nuvem
+Glb.vue:292     - 颜色: #ffffff
+Glb.vue:293     - 透明: true
+Glb.vue:294     - 不透明度: 1
+Glb.vue:295     - 金属度: 0
+Glb.vue:296     - 粗糙度: 1
+Glb.vue:297     - 双面: 是
+Glb.vue:308     🖼️ 纹理贴图:
+Glb.vue:313       - map:
+Glb.vue:314           UUID: b044c3b7-b24f-419a-8f30-7845de29f430
+Glb.vue:315           尺寸: 2048 × 1024
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:368 
+📦 材质 [5/14]:
+Glb.vue:289   🎨 材质属性:
+Glb.vue:290     - 类型: MeshStandardMaterial
+Glb.vue:291     - 名称: venus
+Glb.vue:292     - 颜色: #ffffff
+Glb.vue:293     - 透明: false
+Glb.vue:294     - 不透明度: 1
+Glb.vue:295     - 金属度: 0
+Glb.vue:296     - 粗糙度: 0.751714939
+Glb.vue:297     - 双面: 是
+Glb.vue:308     🖼️ 纹理贴图:
+Glb.vue:313       - map:
+Glb.vue:314           UUID: c3671347-6343-4d9e-83b8-bbbb4524ea07
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:313       - normalMap:
+Glb.vue:314           UUID: 7cf8e4d4-9317-4b28-b41c-71c6bd4c63b1
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:368 
+📦 材质 [6/14]:
+Glb.vue:289   🎨 材质属性:
+Glb.vue:290     - 类型: MeshStandardMaterial
+Glb.vue:291     - 名称: Jupiter
+Glb.vue:292     - 颜色: #ffffff
+Glb.vue:293     - 透明: false
+Glb.vue:294     - 不透明度: 1
+Glb.vue:295     - 金属度: 0
+Glb.vue:296     - 粗糙度: 0.8239417257
+Glb.vue:297     - 双面: 是
+Glb.vue:308     🖼️ 纹理贴图:
+Glb.vue:313       - map:
+Glb.vue:314           UUID: 1761ce10-df08-4c8a-861e-76b9c5421d50
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:313       - normalMap:
+Glb.vue:314           UUID: d0672dff-8d80-4e3d-aa6b-ce172d38223d
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:368 
+📦 材质 [7/14]:
+Glb.vue:289   🎨 材质属性:
+Glb.vue:290     - 类型: MeshStandardMaterial
+Glb.vue:291     - 名称: JupiterAtmosphere
+Glb.vue:292     - 颜色: #ffffff
+Glb.vue:293     - 透明: true
+Glb.vue:294     - 不透明度: 1
+Glb.vue:295     - 金属度: 0
+Glb.vue:296     - 粗糙度: 0.5809832317
+Glb.vue:297     - 双面: 是
+Glb.vue:308     🖼️ 纹理贴图:
+Glb.vue:313       - map:
+Glb.vue:314           UUID: d14b7665-c7df-4dd4-93eb-0b781e34f6a3
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:313       - normalMap:
+Glb.vue:314           UUID: d0672dff-8d80-4e3d-aa6b-ce172d38223d
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:368 
+📦 材质 [8/14]:
+Glb.vue:289   🎨 材质属性:
+Glb.vue:290     - 类型: MeshStandardMaterial
+Glb.vue:291     - 名称: Saturn
+Glb.vue:292     - 颜色: #ffffff
+Glb.vue:293     - 透明: true
+Glb.vue:294     - 不透明度: 1
+Glb.vue:295     - 金属度: 0
+Glb.vue:296     - 粗糙度: 1
+Glb.vue:297     - 双面: 是
+Glb.vue:308     🖼️ 纹理贴图:
+Glb.vue:313       - map:
+Glb.vue:314           UUID: b8fd2c61-cc3a-4eac-b413-ca37132e1791
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:368 
+📦 材质 [9/14]:
+Glb.vue:289   🎨 材质属性:
+Glb.vue:290     - 类型: MeshStandardMaterial
+Glb.vue:291     - 名称: material
+Glb.vue:292     - 颜色: #ffffff
+Glb.vue:293     - 透明: false
+Glb.vue:294     - 不透明度: 1
+Glb.vue:295     - 金属度: 0
+Glb.vue:296     - 粗糙度: 1
+Glb.vue:297     - 双面: 是
+Glb.vue:308     🖼️ 纹理贴图:
+Glb.vue:313       - map:
+Glb.vue:314           UUID: 45ffc133-c18e-4a31-9fb1-72d2a04e12b3
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:313       - emissiveMap:
+Glb.vue:314           UUID: 45ffc133-c18e-4a31-9fb1-72d2a04e12b3
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:368 
+📦 材质 [10/14]:
+Glb.vue:289   🎨 材质属性:
+Glb.vue:290     - 类型: MeshStandardMaterial
+Glb.vue:291     - 名称: SunCorona
+Glb.vue:292     - 颜色: #ffffff
+Glb.vue:293     - 透明: true
+Glb.vue:294     - 不透明度: 1
+Glb.vue:295     - 金属度: 0
+Glb.vue:296     - 粗糙度: 0.9577051495
+Glb.vue:297     - 双面: 是
+Glb.vue:308     🖼️ 纹理贴图:
+Glb.vue:313       - map:
+Glb.vue:314           UUID: 965e0f82-c194-4561-8ab6-6dc607cec6a3
+Glb.vue:315           尺寸: 2048 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:313       - emissiveMap:
+Glb.vue:314           UUID: b0601fca-807b-4cbb-8d6a-b856c7dbe00e
+Glb.vue:315           尺寸: 2048 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:368 
+📦 材质 [11/14]:
+Glb.vue:289   🎨 材质属性:
+Glb.vue:290     - 类型: MeshStandardMaterial
+Glb.vue:291     - 名称: Mars
+Glb.vue:292     - 颜色: #ffffff
+Glb.vue:293     - 透明: false
+Glb.vue:294     - 不透明度: 1
+Glb.vue:295     - 金属度: 0
+Glb.vue:296     - 粗糙度: 0.8187881098
+Glb.vue:297     - 双面: 是
+Glb.vue:308     🖼️ 纹理贴图:
+Glb.vue:313       - map:
+Glb.vue:314           UUID: ce879d4d-9b2a-4d96-a69b-dc084962a6bb
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:313       - normalMap:
+Glb.vue:314           UUID: 15a8686d-afc8-4933-8db6-7e5850b23e43
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:368 
+📦 材质 [12/14]:
+Glb.vue:289   🎨 材质属性:
+Glb.vue:290     - 类型: MeshStandardMaterial
+Glb.vue:291     - 名称: Mercury
+Glb.vue:292     - 颜色: #ffffff
+Glb.vue:293     - 透明: false
+Glb.vue:294     - 不透明度: 1
+Glb.vue:295     - 金属度: 0
+Glb.vue:296     - 粗糙度: 0.9577051495
+Glb.vue:297     - 双面: 是
+Glb.vue:308     🖼️ 纹理贴图:
+Glb.vue:313       - map:
+Glb.vue:314           UUID: f6632a8f-3203-425a-a181-95251efcc370
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:313       - normalMap:
+Glb.vue:314           UUID: 928596b3-089c-4454-a2e8-17965d08c7ed
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:313       - emissiveMap:
+Glb.vue:314           UUID: a8bbb1e1-6968-487f-8bef-385b1f4aec2b
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:368 
+📦 材质 [13/14]:
+Glb.vue:289   🎨 材质属性:
+Glb.vue:290     - 类型: MeshStandardMaterial
+Glb.vue:291     - 名称: Moon
+Glb.vue:292     - 颜色: #ffffff
+Glb.vue:293     - 透明: false
+Glb.vue:294     - 不透明度: 1
+Glb.vue:295     - 金属度: 0
+Glb.vue:296     - 粗糙度: 0.9577051495
+Glb.vue:297     - 双面: 是
+Glb.vue:308     🖼️ 纹理贴图:
+Glb.vue:313       - map:
+Glb.vue:314           UUID: 12d743d8-dea6-4659-9994-43ccb4eec5cf
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:313       - normalMap:
+Glb.vue:314           UUID: e9627612-213c-4cc2-b429-6a6afee95b57
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:368 
+📦 材质 [14/14]:
+Glb.vue:289   🎨 材质属性:
+Glb.vue:290     - 类型: MeshStandardMaterial
+Glb.vue:291     - 名称: Earth
+Glb.vue:292     - 颜色: #ffffff
+Glb.vue:293     - 透明: false
+Glb.vue:294     - 不透明度: 1
+Glb.vue:295     - 金属度: 0
+Glb.vue:296     - 粗糙度: 1
+Glb.vue:297     - 双面: 是
+Glb.vue:308     🖼️ 纹理贴图:
+Glb.vue:313       - map:
+Glb.vue:314           UUID: fc317450-6763-4392-940b-ec4823121cc8
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:313       - normalMap:
+Glb.vue:314           UUID: d66ef02a-210b-4de3-b4a0-8993458c5952
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:313       - roughnessMap:
+Glb.vue:314           UUID: 153f0b1f-fa6a-41b8-a288-69d6a96fb4bb
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:313       - metalnessMap:
+Glb.vue:314           UUID: 153f0b1f-fa6a-41b8-a288-69d6a96fb4bb
+Glb.vue:315           尺寸: 4096 × 2048
+Glb.vue:316           格式: 1023
+Glb.vue:317           类型: 1009
+Glb.vue:318           Source: embedded
+Glb.vue:373 
+========================================
+Glb.vue:374 🖼️ 所有纹理详细信息:
+Glb.vue:375 ========================================
+
+Glb.vue:392 
+🖼️ 纹理 [1/25]:
+Glb.vue:393   - 类型: map
+Glb.vue:394   - 所属材质: Pluto
+Glb.vue:395   - UUID: 49ce0bda-f65b-45c4-a7f5-d0ca69f51abb
+Glb.vue:396   - 尺寸: 2048 × 1024
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [2/25]:
+Glb.vue:393   - 类型: normalMap
+Glb.vue:394   - 所属材质: Pluto
+Glb.vue:395   - UUID: 4ee05b8e-8011-4763-9139-aa4518a3faaa
+Glb.vue:396   - 尺寸: 2048 × 1024
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [3/25]:
+Glb.vue:393   - 类型: map
+Glb.vue:394   - 所属材质: Uranus
+Glb.vue:395   - UUID: 836ef8d6-6cfa-4eca-9fb1-47ac0b2e0863
+Glb.vue:396   - 尺寸: 2048 × 1024
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [4/25]:
+Glb.vue:393   - 类型: normalMap
+Glb.vue:394   - 所属材质: Uranus
+Glb.vue:395   - UUID: 0a440b18-3353-4625-a7db-058ec4d18149
+Glb.vue:396   - 尺寸: 2048 × 1024
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [5/25]:
+Glb.vue:393   - 类型: map
+Glb.vue:394   - 所属材质: Neptune
+Glb.vue:395   - UUID: 23bc4a19-590a-4feb-90f6-95fa30f4dd09
+Glb.vue:396   - 尺寸: 2048 × 1024
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [6/25]:
+Glb.vue:393   - 类型: map
+Glb.vue:394   - 所属材质: Nuvem
+Glb.vue:395   - UUID: b044c3b7-b24f-419a-8f30-7845de29f430
+Glb.vue:396   - 尺寸: 2048 × 1024
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [7/25]:
+Glb.vue:393   - 类型: map
+Glb.vue:394   - 所属材质: venus
+Glb.vue:395   - UUID: c3671347-6343-4d9e-83b8-bbbb4524ea07
+Glb.vue:396   - 尺寸: 4096 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [8/25]:
+Glb.vue:393   - 类型: normalMap
+Glb.vue:394   - 所属材质: venus
+Glb.vue:395   - UUID: 7cf8e4d4-9317-4b28-b41c-71c6bd4c63b1
+Glb.vue:396   - 尺寸: 4096 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [9/25]:
+Glb.vue:393   - 类型: map
+Glb.vue:394   - 所属材质: Jupiter
+Glb.vue:395   - UUID: 1761ce10-df08-4c8a-861e-76b9c5421d50
+Glb.vue:396   - 尺寸: 4096 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [10/25]:
+Glb.vue:393   - 类型: normalMap
+Glb.vue:394   - 所属材质: JupiterAtmosphere
+Glb.vue:395   - UUID: d0672dff-8d80-4e3d-aa6b-ce172d38223d
+Glb.vue:396   - 尺寸: 4096 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [11/25]:
+Glb.vue:393   - 类型: map
+Glb.vue:394   - 所属材质: JupiterAtmosphere
+Glb.vue:395   - UUID: d14b7665-c7df-4dd4-93eb-0b781e34f6a3
+Glb.vue:396   - 尺寸: 4096 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [12/25]:
+Glb.vue:393   - 类型: map
+Glb.vue:394   - 所属材质: Saturn
+Glb.vue:395   - UUID: b8fd2c61-cc3a-4eac-b413-ca37132e1791
+Glb.vue:396   - 尺寸: 4096 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [13/25]:
+Glb.vue:393   - 类型: emissiveMap
+Glb.vue:394   - 所属材质: material
+Glb.vue:395   - UUID: 45ffc133-c18e-4a31-9fb1-72d2a04e12b3
+Glb.vue:396   - 尺寸: 4096 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [14/25]:
+Glb.vue:393   - 类型: map
+Glb.vue:394   - 所属材质: SunCorona
+Glb.vue:395   - UUID: 965e0f82-c194-4561-8ab6-6dc607cec6a3
+Glb.vue:396   - 尺寸: 2048 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [15/25]:
+Glb.vue:393   - 类型: emissiveMap
+Glb.vue:394   - 所属材质: SunCorona
+Glb.vue:395   - UUID: b0601fca-807b-4cbb-8d6a-b856c7dbe00e
+Glb.vue:396   - 尺寸: 2048 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [16/25]:
+Glb.vue:393   - 类型: map
+Glb.vue:394   - 所属材质: Mars
+Glb.vue:395   - UUID: ce879d4d-9b2a-4d96-a69b-dc084962a6bb
+Glb.vue:396   - 尺寸: 4096 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [17/25]:
+Glb.vue:393   - 类型: normalMap
+Glb.vue:394   - 所属材质: Mars
+Glb.vue:395   - UUID: 15a8686d-afc8-4933-8db6-7e5850b23e43
+Glb.vue:396   - 尺寸: 4096 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [18/25]:
+Glb.vue:393   - 类型: map
+Glb.vue:394   - 所属材质: Mercury
+Glb.vue:395   - UUID: f6632a8f-3203-425a-a181-95251efcc370
+Glb.vue:396   - 尺寸: 4096 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [19/25]:
+Glb.vue:393   - 类型: normalMap
+Glb.vue:394   - 所属材质: Mercury
+Glb.vue:395   - UUID: 928596b3-089c-4454-a2e8-17965d08c7ed
+Glb.vue:396   - 尺寸: 4096 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [20/25]:
+Glb.vue:393   - 类型: emissiveMap
+Glb.vue:394   - 所属材质: Mercury
+Glb.vue:395   - UUID: a8bbb1e1-6968-487f-8bef-385b1f4aec2b
+Glb.vue:396   - 尺寸: 4096 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [21/25]:
+Glb.vue:393   - 类型: map
+Glb.vue:394   - 所属材质: Moon
+Glb.vue:395   - UUID: 12d743d8-dea6-4659-9994-43ccb4eec5cf
+Glb.vue:396   - 尺寸: 4096 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [22/25]:
+Glb.vue:393   - 类型: normalMap
+Glb.vue:394   - 所属材质: Moon
+Glb.vue:395   - UUID: e9627612-213c-4cc2-b429-6a6afee95b57
+Glb.vue:396   - 尺寸: 4096 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [23/25]:
+Glb.vue:393   - 类型: map
+Glb.vue:394   - 所属材质: Earth
+Glb.vue:395   - UUID: fc317450-6763-4392-940b-ec4823121cc8
+Glb.vue:396   - 尺寸: 4096 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [24/25]:
+Glb.vue:393   - 类型: normalMap
+Glb.vue:394   - 所属材质: Earth
+Glb.vue:395   - UUID: d66ef02a-210b-4de3-b4a0-8993458c5952
+Glb.vue:396   - 尺寸: 4096 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:392 
+🖼️ 纹理 [25/25]:
+Glb.vue:393   - 类型: metalnessMap
+Glb.vue:394   - 所属材质: Earth
+Glb.vue:395   - UUID: 153f0b1f-fa6a-41b8-a288-69d6a96fb4bb
+Glb.vue:396   - 尺寸: 4096 × 2048
+Glb.vue:397   - 格式: 1023
+Glb.vue:398   - 数据类型: 1009
+Glb.vue:399   - 编码: undefined
+Glb.vue:400   - 过滤模式: minFilter=1008, magFilter=1006
+Glb.vue:401   - 包裹模式: wrapS=1000, wrapT=1000
+Glb.vue:402   - 各向异性: 1
+Glb.vue:403   - Source: embedded data
+Glb.vue:407 
+========================================
+Glb.vue:408 📷 相机和模型调整:
+Glb.vue:409 ========================================
+
+Glb.vue:416   - 模型中心: _Vector3 {x: -378596.0238412385, y: -1.5133991837501526e-8, z: -0.02021195529960096}
+Glb.vue:417   - 模型尺寸: _Vector3 {x: 1837477.259363019, y: 1066099.9635089785, z: 1064638.7940609409}
+Glb.vue:442   - 相机距离: 7202339.207658794
+Glb.vue:443   - 相机位置: _Vector3 {x: 408.24829046386304, y: 408.248290463863, z: 816.4965809277261}
+Glb.vue:444   ✓ 相机已自动调整
+Glb.vue:451 
+========================================
+Glb.vue:452 ✅ 所有模型信息已打印完成！

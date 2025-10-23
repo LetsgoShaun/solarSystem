@@ -1,8 +1,8 @@
 <template>
-    <SolarSystem />
+    <Glb />
   </template>
   
   <script setup>
-  import SolarSystem from "../components/SolarSystem.vue";
+  import Glb from "../components/Glb.vue";
   </script>
   
