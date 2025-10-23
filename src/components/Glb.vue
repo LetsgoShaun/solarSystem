@@ -94,19 +94,118 @@ let animationId = null;
 let planetObjects = {}; // 存储行星对象
 let planetMeshes = []; // 存储重新排列的行星网格
 
-// 行星配置 - 按太阳系顺序（缩放调整为更合适的观看比例）
+// 行星配置 - 按太阳系真实顺序，大小相近便于观察细节
 const planets = [
-  { name: "Sun", displayName: "太阳 ☀️", icon: "☀️", materialName: "material", scale: 0.01 },
-  { name: "Mercury", displayName: "水星 ☿️", icon: "☿️", materialName: "Mercury", scale: 0.004 },
-  { name: "Venus", displayName: "金星 ♀️", icon: "♀️", materialName: "venus", scale: 0.008 },
-  { name: "Earth", displayName: "地球 🌍", icon: "🌍", materialName: "Earth", scale: 0.009 },
-  { name: "Moon", displayName: "月球 🌙", icon: "🌙", materialName: "Moon", scale: 0.002 },
-  { name: "Mars", displayName: "火星 ♂️", icon: "♂️", materialName: "Mars", scale: 0.005 },
-  { name: "Jupiter", displayName: "木星 ♃", icon: "♃", materialName: "Jupiter", scale: 0.0008 },
-  { name: "Saturn", displayName: "土星 ♄", icon: "♄", materialName: "Saturn", scale: 0.0004 },
-  { name: "Uranus", displayName: "天王星 ♅", icon: "♅", materialName: "Uranus", scale: 0.0002 },
-  { name: "Neptune", displayName: "海王星 ♆", icon: "♆", materialName: "Neptune", scale: 0.00025 },
-  { name: "Pluto", displayName: "冥王星 ♇", icon: "♇", materialName: "Pluto", scale: 0.001 }
+  { 
+    name: "Sun", 
+    displayName: "太阳 ☀️", 
+    icon: "☀️", 
+    materialName: "material", 
+    scale: 0.006,
+    orbitRadius: 0, // 太阳在中心
+    orbitSpeed: 0,  // 不公转
+    rotationSpeed: 0.001
+  },
+  { 
+    name: "Mercury", 
+    displayName: "水星 ☿️", 
+    icon: "☿️", 
+    materialName: "Mercury", 
+    scale: 0.005,
+    orbitRadius: 15, // 轨道半径
+    orbitSpeed: 0.04, // 公转速度（距离太阳越近越快）
+    rotationSpeed: 0.005
+  },
+  { 
+    name: "Venus", 
+    displayName: "金星 ♀️", 
+    icon: "♀️", 
+    materialName: "venus", 
+    scale: 0.005,
+    orbitRadius: 25,
+    orbitSpeed: 0.025,
+    rotationSpeed: 0.004
+  },
+  { 
+    name: "Earth", 
+    displayName: "地球 🌍", 
+    icon: "🌍", 
+    materialName: "Earth", 
+    scale: 0.005,
+    orbitRadius: 35,
+    orbitSpeed: 0.02,
+    rotationSpeed: 0.01
+  },
+  { 
+    name: "Moon", 
+    displayName: "月球 🌙", 
+    icon: "🌙", 
+    materialName: "Moon", 
+    scale: 0.003,
+    orbitRadius: 40, // 月球轨道稍远于地球
+    orbitSpeed: 0.018,
+    rotationSpeed: 0.008
+  },
+  { 
+    name: "Mars", 
+    displayName: "火星 ♂️", 
+    icon: "♂️", 
+    materialName: "Mars", 
+    scale: 0.005,
+    orbitRadius: 50,
+    orbitSpeed: 0.015,
+    rotationSpeed: 0.009
+  },
+  { 
+    name: "Jupiter", 
+    displayName: "木星 ♃", 
+    icon: "♃", 
+    materialName: "Jupiter", 
+    scale: 0.006,
+    orbitRadius: 70,
+    orbitSpeed: 0.008,
+    rotationSpeed: 0.015
+  },
+  { 
+    name: "Saturn", 
+    displayName: "土星 ♄", 
+    icon: "♄", 
+    materialName: "Saturn", 
+    scale: 0.006,
+    orbitRadius: 90,
+    orbitSpeed: 0.005,
+    rotationSpeed: 0.012
+  },
+  { 
+    name: "Uranus", 
+    displayName: "天王星 ♅", 
+    icon: "♅", 
+    materialName: "Uranus", 
+    scale: 0.005,
+    orbitRadius: 110,
+    orbitSpeed: 0.003,
+    rotationSpeed: 0.008
+  },
+  { 
+    name: "Neptune", 
+    displayName: "海王星 ♆", 
+    icon: "♆", 
+    materialName: "Neptune", 
+    scale: 0.005,
+    orbitRadius: 130,
+    orbitSpeed: 0.002,
+    rotationSpeed: 0.007
+  },
+  { 
+    name: "Pluto", 
+    displayName: "冥王星 ♇", 
+    icon: "♇", 
+    materialName: "Pluto", 
+    scale: 0.004,
+    orbitRadius: 150,
+    orbitSpeed: 0.001,
+    rotationSpeed: 0.003
+  }
 ];
 
 onMounted(() => {
@@ -177,13 +276,6 @@ function initScene() {
   
   const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.6);
   scene.add(hemisphereLight);
-  
-  // 添加辅助器
-  const axesHelper = new THREE.AxesHelper(100);
-  scene.add(axesHelper);
-  
-  const gridHelper = new THREE.GridHelper(200, 20, 0x444444, 0x222222);
-  scene.add(gridHelper);
   
   console.log('✓ 场景初始化完成');
 }
@@ -476,14 +568,11 @@ function loadGLBModel() {
   );
 }
 
-// 重新排列行星
+// 重新排列行星 - 太阳系布局
 function arrangePlanets() {
   console.log('\n========================================');
-  console.log('🎨 重新排列行星展示:');
+  console.log('🎨 创建太阳系布局:');
   console.log('========================================\n');
-  
-  const spacing = 20; // 行星之间的间距
-  let currentX = -spacing * planets.length / 2; // 从左边开始
   
   planets.forEach((planetConfig, index) => {
     const planetData = planetObjects[planetConfig.name];
@@ -494,36 +583,32 @@ function arrangePlanets() {
     
     const originalMesh = planetData.mesh;
     
-    // 创建新的网格（不克隆骨骼动画，只克隆几何体和材质）
+    // 创建新的网格
     let newMesh;
     const geometry = originalMesh.geometry;
     const material = originalMesh.material;
     
     if (originalMesh.isSkinnedMesh) {
-      // 对于 SkinnedMesh，需要特殊处理
-      // 克隆几何体并计算顶点法线
       const clonedGeometry = geometry.clone();
       clonedGeometry.computeVertexNormals();
-      
       newMesh = new THREE.Mesh(clonedGeometry, material.clone());
-      
-      console.log(`     原始类型: SkinnedMesh`);
-      console.log(`     几何体顶点数:`, clonedGeometry.attributes.position.count);
     } else {
-      // 普通 Mesh
       const clonedGeometry = geometry.clone();
       clonedGeometry.computeVertexNormals();
-      
       newMesh = new THREE.Mesh(clonedGeometry, material.clone());
-      
-      console.log(`     原始类型: Mesh`);
-      console.log(`     几何体顶点数:`, clonedGeometry.attributes.position.count);
     }
     
-    // 设置位置和缩放
+    // 设置缩放
     newMesh.scale.set(planetConfig.scale, planetConfig.scale, planetConfig.scale);
-    newMesh.position.set(currentX, 0, 0);
-    newMesh.rotation.set(0, 0, 0);
+    
+    // 调整所有行星的方向（统一绕X轴旋转90度）
+    newMesh.rotation.x = Math.PI / 2;
+    
+    // 初始位置（行星会在轨道上，初始角度随机分布）
+    const initialAngle = (index / planets.length) * Math.PI * 2;
+    const x = Math.cos(initialAngle) * planetConfig.orbitRadius;
+    const z = Math.sin(initialAngle) * planetConfig.orbitRadius;
+    newMesh.position.set(x, 0, z);
     
     // 确保材质可见
     newMesh.visible = true;
@@ -534,45 +619,51 @@ function arrangePlanets() {
     scene.add(newMesh);
     planetMeshes.push(newMesh);
     
-    // 保存显示用的网格引用
+    // 保存配置信息
     planetObjects[planetConfig.name].displayMesh = newMesh;
-    planetObjects[planetConfig.name].position = new THREE.Vector3(currentX, 0, 0);
+    planetObjects[planetConfig.name].config = planetConfig;
+    planetObjects[planetConfig.name].currentAngle = initialAngle; // 当前轨道角度
     
-    // 计算包围盒
-    const box = new THREE.Box3().setFromObject(newMesh);
-    const size = box.getSize(new THREE.Vector3());
+    // 如果是太阳，添加轨道线
+    if (planetConfig.orbitRadius > 0) {
+      const orbitGeometry = new THREE.BufferGeometry();
+      const orbitPoints = [];
+      for (let i = 0; i <= 64; i++) {
+        const angle = (i / 64) * Math.PI * 2;
+        orbitPoints.push(
+          Math.cos(angle) * planetConfig.orbitRadius,
+          0,
+          Math.sin(angle) * planetConfig.orbitRadius
+        );
+      }
+      orbitGeometry.setAttribute('position', new THREE.Float32BufferAttribute(orbitPoints, 3));
+      const orbitMaterial = new THREE.LineBasicMaterial({ 
+        color: 0x444444, 
+        transparent: true, 
+        opacity: 0.3 
+      });
+      const orbitLine = new THREE.Line(orbitGeometry, orbitMaterial);
+      scene.add(orbitLine);
+    }
     
     console.log(`  ${planetConfig.icon} ${planetConfig.displayName}:`);
-    console.log(`     位置: (${currentX.toFixed(1)}, 0, 0)`);
+    console.log(`     轨道半径: ${planetConfig.orbitRadius}`);
     console.log(`     缩放比例: ${planetConfig.scale}`);
-    console.log(`     实际尺寸: ${size.x.toFixed(2)} × ${size.y.toFixed(2)} × ${size.z.toFixed(2)}`);
-    console.log(`     材质:`, newMesh.material.name);
-    console.log(`     可见:`, newMesh.visible);
-    
-    // 添加一个小球作为标记（用于调试）
-    const markerGeometry = new THREE.SphereGeometry(0.5, 16, 16);
-    const markerMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
-    const marker = new THREE.Mesh(markerGeometry, markerMaterial);
-    marker.position.copy(newMesh.position);
-    scene.add(marker);
-    
-    currentX += spacing;
+    console.log(`     公转速度: ${planetConfig.orbitSpeed}`);
+    console.log(`     自转速度: ${planetConfig.rotationSpeed}`);
   });
   
-  // 调整相机位置以查看所有行星
-  const totalWidth = Math.abs(currentX);
-  
-  camera.position.set(0, 15, 40);
+  // 调整相机位置以查看整个太阳系
+  camera.position.set(0, 100, 150);
   controls.target.set(0, 0, 0);
-  controls.minDistance = 5;
-  controls.maxDistance = 200;
+  controls.minDistance = 20;
+  controls.maxDistance = 500;
   controls.update();
   
-  console.log('\n✓ 行星排列完成');
-  console.log(`  总宽度: ${totalWidth.toFixed(1)}`);
-  console.log(`  相机位置: (0, 15, 40)`);
-  console.log(`  相机目标: (0, 0, 0)`);
-  console.log(`  已添加 ${planetMeshes.length} 个行星到场景`);
+  console.log('\n✓ 太阳系布局完成');
+  console.log(`  相机位置: (0, 100, 150)`);
+  console.log(`  已添加 ${planetMeshes.length} 个天体到场景`);
+  console.log(`  太阳在中心 (0, 0, 0)`);
 }
 
 function focusOnPlanet(planet) {
@@ -586,22 +677,23 @@ function focusOnPlanet(planet) {
   }
   
   const mesh = planetData.displayMesh;
-  const position = planetData.position;
+  const currentPosition = mesh.position.clone();
   
   // 计算合适的观察距离
   const box = new THREE.Box3().setFromObject(mesh);
   const size = box.getSize(new THREE.Vector3());
   const maxDim = Math.max(size.x, size.y, size.z);
-  const distance = Math.max(maxDim * 3, 5);
+  const distance = Math.max(maxDim * 4, 10);
   
-  // 目标相机位置
+  // 目标相机位置（在行星前上方）
+  const direction = currentPosition.clone().normalize();
   const targetPosition = new THREE.Vector3(
-    position.x,
-    position.y + distance * 0.3,
-    position.z + distance
+    currentPosition.x + direction.x * distance,
+    currentPosition.y + distance * 0.5,
+    currentPosition.z + direction.z * distance
   );
   
-  console.log('  目标位置:', position);
+  console.log('  目标位置:', currentPosition);
   console.log('  相机位置:', targetPosition);
   
   // 平滑移动相机
@@ -609,30 +701,40 @@ function focusOnPlanet(planet) {
     x: targetPosition.x,
     y: targetPosition.y,
     z: targetPosition.z,
-    duration: 1.5,
+    duration: 2,
     ease: "power2.inOut",
     onUpdate: () => {
-      controls.target.copy(position);
+      // 动态更新目标位置（因为行星在移动）
+      const updatedPosition = planetData.displayMesh.position.clone();
+      controls.target.copy(updatedPosition);
       controls.update();
     }
-  });
-  
-  // 同时动画控制器目标
-  gsap.to(controls.target, {
-    x: position.x,
-    y: position.y,
-    z: position.z,
-    duration: 1.5,
-    ease: "power2.inOut"
   });
 }
 
 function animate() {
   animationId = requestAnimationFrame(animate);
   
-  // 让所有行星自转
-  planetMeshes.forEach((mesh, index) => {
-    mesh.rotation.y += 0.005;
+  // 行星公转和自转
+  planets.forEach((planetConfig) => {
+    const planetData = planetObjects[planetConfig.name];
+    if (!planetData || !planetData.displayMesh) return;
+    
+    const mesh = planetData.displayMesh;
+    
+    // 所有行星统一绕Z轴自转（因为已经旋转了90度）
+    mesh.rotation.z += planetConfig.rotationSpeed;
+    
+    // 公转（如果不是太阳）
+    if (planetConfig.orbitRadius > 0) {
+      planetData.currentAngle += planetConfig.orbitSpeed * 0.01;
+      
+      const x = Math.cos(planetData.currentAngle) * planetConfig.orbitRadius;
+      const z = Math.sin(planetData.currentAngle) * planetConfig.orbitRadius;
+      
+      mesh.position.set(x, 0, z);
+      planetData.position = mesh.position.clone();
+    }
   });
   
   if (controls) controls.update();
